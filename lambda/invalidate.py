@@ -13,7 +13,7 @@ def put_job_success(job, client):
     
     """
     print('Putting job success')
-    code_pipeline.put_job_success_result(jobId=job)
+    client.put_job_success_result(jobId=job)
   
 def put_job_failure(job, message, client):
     """Notify CodePipeline of a failed job
@@ -28,7 +28,7 @@ def put_job_failure(job, message, client):
     """
     print('Putting job failure')
     print(message)
-    code_pipeline.put_job_failure_result(jobId=job, failureDetails={'message': message, 'type': 'JobFailed'})
+    client.put_job_failure_result(jobId=job, failureDetails={'message': message, 'type': 'JobFailed'})
 
 
 def lambda_handler(event, context):
@@ -63,5 +63,4 @@ def lambda_handler(event, context):
 	        # then fail the job and log the exception message.
 	        print('Function failed due to exception.') 
 	        print(e)
-	        traceback.print_exc()
 	        put_job_failure(job_id, 'Function exception: ' + str(e), code_pipeline)
