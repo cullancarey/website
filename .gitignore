@@ -37,9 +37,10 @@ terraform.rc
 
 .DS_Store
 
-assets/
 
 backend.conf
 terraform/policy.json
+
+
 
 
