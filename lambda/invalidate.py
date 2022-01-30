@@ -2,34 +2,13 @@ import boto3
 from datetime import datetime
 
 def put_job_success(job, client):
-    """Notify CodePipeline of a successful job
-    
-    Args:
-        job: The CodePipeline job ID
-        message: A message to be logged relating to the job status
-        
-    Raises:
-        Exception: Any exception thrown by .put_job_success_result()
-    
-    """
     print('Putting job success')
     client.put_job_success_result(jobId=job)
   
 def put_job_failure(job, message, client):
-    """Notify CodePipeline of a failed job
-    
-    Args:
-        job: The CodePipeline job ID
-        message: A message to be logged relating to the job status
-        
-    Raises:
-        Exception: Any exception thrown by .put_job_failure_result()
-    
-    """
     print('Putting job failure')
     print(message)
     client.put_job_failure_result(jobId=job, failureDetails={'message': message, 'type': 'JobFailed'})
-
 
 def lambda_handler(event, context):
     #Create clients

@@ -39,7 +39,9 @@ terraform.rc
 
 
 backend.conf
-terraform/policy.json
+terraform/*.json
+
+
 
 
 

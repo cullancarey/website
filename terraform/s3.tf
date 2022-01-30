@@ -13,5 +13,5 @@ resource "aws_s3_bucket" "website" {
 
 resource "aws_s3_bucket_policy" "website-bucket-policy" {
   bucket = aws_s3_bucket.website.bucket
-  policy = file("policy.json") 
+  policy = file("s3_policy.json") 
 }   
