@@ -15,7 +15,7 @@ resource "aws_lambda_function" "invalidation_lambda" {
   filename      = "invalidation_lambda.zip"
   function_name = "website-invalidation"
   role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "invalidation.lambda_handler"
+  handler       = "invalide.lambda_handler"
 
   source_code_hash = "${data.archive_file.lambda_zip.output_base64sha256}"
 
