@@ -1,20 +1,20 @@
-# Do not change version. This is the version of aws buildspec, not the version of your buildspec file.
 version: 0.2
 
-
 phases:
-  install:
-    runtime-versions:
-      nodejs: 10
   pre_build:
     commands:
-      - echo Installing source NPM dependencies...
-      - npm install
+      - aws s3 rm s3://cullancarey --recursive
   build:
     commands:
-      - echo Build started on `date`
-      - npm run build
+      - mkdir build-output
+      - find . -type d -name src -exec cp -R {} build-output \;
+      - find . -mindepth 1 -name build-output -prune -o -exec rm -rf {} +
+  post_build:
+    commands:
+      - mv build-output/**/* ./
+      - mv build-output/* ./
+      - rm -R build-output
 artifacts:
   files:
-    - src/*
-  base-directory: src
+    - '**/*'
+  name: $(AWS_REGION)-$(date +%Y-%m-%d)
