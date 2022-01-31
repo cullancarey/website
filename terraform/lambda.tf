@@ -21,3 +21,9 @@ resource "aws_lambda_function" "invalidation_lambda" {
 
   runtime = "python3.9"
 }
+
+resource "aws_iam_policy" "lambda_iam_policy" {
+  name = "AWSLambdaBasicExecutionRole-21a06576-1f41-41d1-a52c-cb2aa08b1ddc"
+  path = "/service-role/"
+  policy = file("lambda_execution_policy.json")
+}
