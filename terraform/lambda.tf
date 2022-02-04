@@ -27,3 +27,5 @@ resource "aws_iam_policy" "lambda_iam_policy" {
   path = "/service-role/"
   policy = file("lambda_execution_policy.json")
 }
+
+
