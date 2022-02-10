@@ -40,7 +40,34 @@ resource "aws_s3_bucket" "website" {
 
 resource "aws_s3_bucket_policy" "website-bucket-policy" {
   bucket = aws_s3_bucket.website.bucket
-  policy = file("s3_policy.json") 
+  policy = <<POLICY
+{
+    "Version": "2008-10-17",
+    "Id": "PolicyForCloudFrontPrivateContent",
+    "Statement": [
+        {
+            "Sid": "AllowPublicAccess",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "${aws_s3_bucket.website.arn}/*"
+        },
+        {
+            "Sid": "DenyAccessWithoutCustomHeader",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "${aws_s3_bucket.website.arn}/*",
+            "Condition": {
+                "StringNotLike": {
+                    "aws:${var.custom_header}": "${random_string.header_value.result}"
+                }
+            }
+        }
+    ]
+}
+
+POLICY
 }   
 
 provider "aws" {
@@ -80,7 +107,34 @@ resource "aws_s3_bucket" "backup-website" {
 resource "aws_s3_bucket_policy" "backup-website-bucket-policy" {
   bucket = aws_s3_bucket.backup-website.bucket
   provider = aws.virginia-s3
-  policy = file("backup_s3_policy.json") 
+  policy = <<POLICY
+{
+    "Version": "2008-10-17",
+    "Id": "PolicyForCloudFrontPrivateContent",
+    "Statement": [
+        {
+            "Sid": "AllowPublicAccess",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "${aws_s3_bucket.backup-website.arn}/*"
+        },
+        {
+            "Sid": "DenyAccessWithoutCustomHeader",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "${aws_s3_bucket.backup-website.arn}/*",
+            "Condition": {
+                "StringNotLike": {
+                    "aws:${var.custom_header}": "${random_string.header_value.result}"
+                }
+            }
+        }
+    ]
+}
+
+POLICY 
 }  
 
 

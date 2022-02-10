@@ -3,9 +3,5 @@ variable "root_domain_name" {
 }
 
 variable "custom_header" {
-
 }
 
-variable "header_name" {
-  
-}

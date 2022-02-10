@@ -1,3 +1,19 @@
+resource "random_string" "header_value" {
+  length           = 20
+  special          = true
+  upper = true
+  lower = true
+  number = true
+}
+
+resource "random_string" "header_name" {
+  length           = 20
+  special          = false
+  upper = true
+  lower = true
+  number = false
+}
+
 resource "aws_cloudfront_distribution" "website_distribution" {
   origin {
     custom_origin_config {
@@ -10,8 +26,8 @@ resource "aws_cloudfront_distribution" "website_distribution" {
     domain_name = "${aws_s3_bucket.website.website_endpoint}"
     origin_id   = "${var.root_domain_name}"
     custom_header {
-          name  = "${var.header_name}"
-          value = "${var.custom_header}"
+          name  = "${var.custom_header}"
+          value = random_string.header_value.result
         }
   }
 
@@ -26,8 +42,8 @@ resource "aws_cloudfront_distribution" "website_distribution" {
     domain_name = "${aws_s3_bucket.backup-website.website_endpoint}"
     origin_id   = "backup-${var.root_domain_name}"
     custom_header {
-          name  = "${var.header_name}"
-          value = "${var.custom_header}"
+          name  = "${var.custom_header}"
+          value = random_string.header_value.result
         }
   }
 

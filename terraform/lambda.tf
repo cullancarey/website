@@ -20,6 +20,7 @@ resource "aws_lambda_function" "invalidation_lambda" {
   source_code_hash = "${data.archive_file.lambda_zip.output_base64sha256}"
 
   runtime = "python3.9"
+  timeout = 300
 }
 
 resource "aws_iam_policy" "lambda_iam_policy" {
