@@ -139,15 +139,67 @@ POLICY
 
 
 resource "aws_iam_role" "replication" {
-  name = "s3crr_role_for_cullancarey.com"
+  name = "s3crr_role_for_${var.root_domain_name}"
   path = "/service-role/"
 
-  assume_role_policy = file("s3_assume_role_policy.json") 
+  assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "s3.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+
+POLICY 
   }
 
 
 resource "aws_iam_policy" "s3_replication_exec_policy" {
-    name = "s3crr_for_cullancarey.com_3e75e7"
+    name = "s3crr_for_${var.root_domain_name}_3e75e7"
     path = "/service-role/"
-    policy = file("s3_exec_policy.json")
+    policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetReplicationConfiguration",
+                "s3:GetObjectVersionForReplication",
+                "s3:GetObjectVersionAcl",
+                "s3:GetObjectVersionTagging",
+                "s3:GetObjectRetention",
+                "s3:GetObjectLegalHold"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "${aws_s3_bucket.website.arn}",
+                "${aws_s3_bucket.website.arn}/*",
+                "${aws_s3_bucket.backup-website.arn}",
+                "${aws_s3_bucket.backup-website.arn}/*"
+            ]
+        },
+        {
+            "Action": [
+                "s3:ReplicateObject",
+                "s3:ReplicateDelete",
+                "s3:ReplicateTags",
+                "s3:ObjectOwnerOverrideToBucketOwner"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "${aws_s3_bucket.website.arn}/*",
+                "${aws_s3_bucket.backup-website.arn}/*"
+            ]
+        }
+    ]
+}
+
+POLICY
   }

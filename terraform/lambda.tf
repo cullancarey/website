@@ -8,7 +8,21 @@ resource "aws_iam_role" "iam_for_lambda" {
   name = "website-invalidation-role-itw5jhl3"
   path          = "/service-role/"
 
-  assume_role_policy = file("lambda_policy.json") 
+  assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+
+POLICY
 }
 
 resource "aws_lambda_function" "invalidation_lambda" {
@@ -26,7 +40,45 @@ resource "aws_lambda_function" "invalidation_lambda" {
 resource "aws_iam_policy" "lambda_iam_policy" {
   name = "AWSLambdaBasicExecutionRole-21a06576-1f41-41d1-a52c-cb2aa08b1ddc"
   path = "/service-role/"
-  policy = file("lambda_execution_policy.json")
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "codepipeline:PutJobFailureResult",
+                "codepipeline:PutJobSuccessResult",
+                "cloudfront:ListDistributions"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "cloudfront:CreateInvalidation",
+                "logs:CreateLogGroup"
+            ],
+            "Resource": [
+                "arn:aws:cloudfront::${local.account_id}:distribution/${aws_cloudfront_distribution.website_distribution.id}",
+                "arn:aws:logs:us-east-2:${local.account_id}:*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:us-east-2:${local.account_id}:log-group:/aws/lambda/${aws_lambda_function.invalidation_lambda.function_name}:*"
+        }
+    ]
+}
+
+POLICY
 }
 
 

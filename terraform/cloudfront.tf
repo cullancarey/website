@@ -6,14 +6,6 @@ resource "random_string" "header_value" {
   number = true
 }
 
-resource "random_string" "header_name" {
-  length           = 20
-  special          = false
-  upper = true
-  lower = true
-  number = false
-}
-
 resource "aws_cloudfront_distribution" "website_distribution" {
   origin {
     custom_origin_config {
@@ -64,9 +56,9 @@ resource "aws_cloudfront_distribution" "website_distribution" {
   }
 
 
-  aliases = ["cullancarey.com", "www.cullancarey.com"]
+  aliases = ["${var.root_domain_name}", "${var.sub_domain}"]
   enabled             = true
-  comment = "Distribution for cullancarey.com" 
+  comment = "Distribution for ${var.root_domain_name}" 
   price_class = "PriceClass_100"
   wait_for_deployment = true
 

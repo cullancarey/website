@@ -7,7 +7,7 @@ resource "aws_acm_certificate" "certificate" {
   domain_name  = "${var.root_domain_name}"
   provider = aws.virginia
   subject_alternative_names = [
-              "www.cullancarey.com"
+              "${var.sub_domain}"
             ]
   validation_method = "DNS"
   options {
