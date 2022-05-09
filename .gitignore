@@ -41,6 +41,8 @@ terraform.rc
 backend.conf
 terraform/*.json
 
+*.drawio*
+
 
 
 
