@@ -62,7 +62,7 @@ resource "aws_iam_policy" "lambda_iam_policy" {
                 "logs:CreateLogGroup"
             ],
             "Resource": [
-                "arn:aws:cloudfront::${local.account_id}:distribution/${aws_cloudfront_distribution.website_distribution.id}",
+                "arn:aws:cloudfront::${local.account_id}:distribution/${module.static-s3-website-template.cloudfront_distribution_id}",
                 "arn:aws:logs:us-east-2:${local.account_id}:*"
             ]
         },
@@ -79,6 +79,11 @@ resource "aws_iam_policy" "lambda_iam_policy" {
 }
 
 POLICY
+}
+
+resource "aws_iam_role_policy_attachment" "lambda-attach" {
+  role       = aws_iam_role.iam_for_lambda.name
+  policy_arn = aws_iam_policy.lambda_iam_policy.arn
 }
 
 
