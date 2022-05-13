@@ -35,6 +35,12 @@ resource "aws_lambda_function" "invalidation_lambda" {
 
   runtime = "python3.9"
   timeout = 300
+
+  environment {
+    variables = {
+      CF_DIST_ID = module.static-s3-website-template.cloudfront_distribution_id
+    }
+  }
 }
 
 resource "aws_iam_policy" "lambda_iam_policy" {

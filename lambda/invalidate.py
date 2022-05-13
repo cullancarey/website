@@ -1,5 +1,6 @@
 import boto3
 from datetime import datetime
+import os
 
 def put_job_success(job, client):
     print('Putting job success')
@@ -16,8 +17,7 @@ def lambda_handler(event, context):
     code_pipeline = boto3.client('codepipeline')
     
     #Get Cloudfront distribution id
-    response = cloudfront.list_distributions()
-    dist_id = response['DistributionList']['Items'][0]['Id']
+    dist_id = os.environ['CF_DIST_ID']
     
     #Create invalidation
     response = cloudfront.create_invalidation(
