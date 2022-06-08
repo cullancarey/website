@@ -2018,7 +2018,7 @@ input, select, textarea {
 
 		.image.arch {
 			display: block;
-			height: 300px;
+			height: 500px;
 			border-radius: 0;
 			margin-left: auto;
 			margin-right: auto;
@@ -2754,7 +2754,7 @@ input, select, textarea {
 					}
 
 					#titleBar .toggle:before {
-						background: #4acaa8;
+						background: steelblue;
 						color: #ffffff;
 						content: '\f0c9';
 						display: block;
