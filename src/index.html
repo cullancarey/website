@@ -64,26 +64,30 @@
 						When I push changes to the Github repository, an AWS CodePipeline is kicked off. This pipeline extracts the necessary files for the website and pushes them to the corresponding S3 bucket. It also invokes a Lambda function to invalidate the Cloudfront cache, so the updates are available immediately. This website is highly available. The main website bucket replicates to the failover bucket in a different region. Access to the S3 bucket is restricted to the Cloudfront OAI. Terraform fully manages the website infrastructure. I used a Terraform module I built and published to the Terraform registry. It is available for use <a href="https://registry.terraform.io/modules/cullancarey/static-s3-website-template/aws/latest" target="_blank">here</a>. Please see this <a href="https://github.com/cullancarey/website" target="_blank">link</a> for the Github repository. Building cullancarey.com was a fun project and provided a very valuable experience.</p>
 					</div>
 				</section>
+
 				<!-- Three -->
 				<section id="three">
-					
-				</section>
-				<!-- Four -->
-				<section id="three">
-					<div class="container">
-						<h3>Contact Me</h3>
-						<p>Please feel free to contact me via <a href = "mailto: cullancarey@gmail.com">email</a> or <a href="https://www.linkedin.com/in/cullancarey/" target="_blank">LinkedIn</a>.</p>
-					</div>
-				</section>
-			</div>
-			<!-- Footer -->
-			<section id="footer">
-				<div class="container">
-					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net" target="_blank">HTML5 UP</a></li>
-					</ul>
-				</div>
-			</section>
+						<div class="container">
+							<h2>Let's Talk!</h2>
+							<p>Enter your name, email, and a message below to get in contact with me.</p>
+							<form  action="https://email.cullancarey.com/" method="post">
+								<div class="fields">
+									<div class="field half">
+										<input type="text" name="CustomerName" id="name" placeholder="Name" />
+									</div>
+									<div class="field half">
+										<input type="email" name="CustomerEmail" id="email" placeholder="Email" />
+									</div>
+									<div class="field">
+										<textarea name="MessageDetails" id="message" placeholder="Send Cullan a message!" rows="7"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Submit" class="button primary"></li>
+								</ul>
+							</form>
+						</div>
+					</section>
 		</div>
 		<!-- Scripts -->
 		<script src="assets/js/jquery.min.js"></script>
