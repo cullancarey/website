@@ -1,9 +1,12 @@
 name: S3 Deploy and Cloudfront Cache Clear
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Pylint"]
+    types:
+      - completed
     branches:
-    - main
+      - main
 
 jobs:
   deploy:
