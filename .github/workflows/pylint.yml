@@ -1,7 +1,11 @@
 name: Pylint
 
-on: push
-
+on:
+  workflow_run:
+    workflows: ["Black Formatter"]
+    types:
+      - completed
+      
 jobs:
   build:
     runs-on: ubuntu-latest
