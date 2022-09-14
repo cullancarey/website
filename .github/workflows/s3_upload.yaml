@@ -2,7 +2,7 @@ name: S3 Deploy and Cloudfront Cache Clear
 
 on:
   workflow_run:
-    workflows: ["Pylint"]
+    workflows: ["Terraform Deploy"]
     types:
       - completed
     branches:

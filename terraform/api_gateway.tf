@@ -5,14 +5,14 @@
 resource "aws_apigatewayv2_api" "form_intake_api" {
   name          = "contact_form_intake_api"
   protocol_type = "HTTP"
-  description = "API gateway resource for intake of the contact for on cullancarey.com"
+  description   = "API gateway resource for intake of the contact for on cullancarey.com"
 
 }
 
 
 
 resource "aws_apigatewayv2_domain_name" "intake_api_domain" {
-  domain_name = "${var.intake_api_domain}"
+  domain_name = var.intake_api_domain
 
   domain_name_configuration {
     certificate_arn = aws_acm_certificate.intake_api_certificate.arn
@@ -23,8 +23,8 @@ resource "aws_apigatewayv2_domain_name" "intake_api_domain" {
 
 
 resource "aws_apigatewayv2_stage" "intake_api_stage" {
-  api_id = aws_apigatewayv2_api.form_intake_api.id
-  name   = "$default"
+  api_id      = aws_apigatewayv2_api.form_intake_api.id
+  name        = "$default"
   description = "Stage for api gateway resource that intakes the websites contact form."
   auto_deploy = true
 }
@@ -38,12 +38,12 @@ resource "aws_apigatewayv2_api_mapping" "intake_api_mapping" {
 
 
 resource "aws_apigatewayv2_integration" "intake_api_integration" {
-  api_id = aws_apigatewayv2_api.form_intake_api.id
-  description = "Integration for form intake api and form intake lambda."
-  integration_type = "AWS_PROXY"
-  connection_type  = "INTERNET"
-  integration_method = "POST"
-  integration_uri = aws_lambda_function.contact_form_intake_lambda.invoke_arn
+  api_id                 = aws_apigatewayv2_api.form_intake_api.id
+  description            = "Integration for form intake api and form intake lambda."
+  integration_type       = "AWS_PROXY"
+  connection_type        = "INTERNET"
+  integration_method     = "POST"
+  integration_uri        = aws_lambda_function.contact_form_intake_lambda.invoke_arn
   payload_format_version = "2.0"
 }
 
@@ -51,5 +51,5 @@ resource "aws_apigatewayv2_integration" "intake_api_integration" {
 resource "aws_apigatewayv2_route" "intake_api_route" {
   api_id    = aws_apigatewayv2_api.form_intake_api.id
   route_key = "POST /"
-  target = "integrations/${aws_apigatewayv2_integration.intake_api_integration.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.intake_api_integration.id}"
 }
