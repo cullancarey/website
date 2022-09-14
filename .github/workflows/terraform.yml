@@ -3,10 +3,8 @@ name: 'Terraform Deploy'
 on:
   workflow_run:
     workflows: ["Pylint"]
-    types:
-      - completed
-    branches:
-      - main
+    types: [completed]
+    branches: [main]
 
 jobs:
   terraform:

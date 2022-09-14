@@ -3,8 +3,7 @@ name: Pylint
 on:
   workflow_run:
     workflows: ["Black Formatter"]
-    types:
-      - completed
+    types: [completed]
 
 jobs:
   run-pylint:
