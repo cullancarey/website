@@ -1,4 +1,4 @@
-"""is a lightweight data interchange format inspired by JavaScript object literal syntax """
+"""is a lightweight data interchange format inspired by JavaScript object literal syntax."""
 import json
 import base64
 import boto3
