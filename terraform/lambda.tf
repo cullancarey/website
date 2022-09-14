@@ -4,7 +4,7 @@
 
 data "archive_file" "invalidation_lambda_zip" {
     type        = "zip"
-    source_dir  = "../invalidate_lambda"
+    source_dir  = "../Lambdas/invalidate_lambda"
     output_path = "invalidation_lambda.zip"
 }
 
@@ -103,7 +103,7 @@ resource "aws_iam_role_policy_attachment" "lambda-attach" {
 
 data "archive_file" "contact_form_lambda_zip" {
     type        = "zip"
-    source_dir  = "../contact_form_lambda"
+    source_dir  = "../Lambdas/contact_form_lambda"
     output_path = "contact_form_intake.zip"
 }
 
