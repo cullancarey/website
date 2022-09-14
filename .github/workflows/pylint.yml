@@ -5,9 +5,9 @@ on:
     workflows: ["Black Formatter"]
     types:
       - completed
-      
+
 jobs:
-  build:
+  run-pylint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
