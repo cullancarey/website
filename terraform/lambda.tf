@@ -193,5 +193,5 @@ resource "aws_lambda_permission" "intake_form_api_lambda_perms" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.contact_form_intake_lambda.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.form_intake_api.execution_arn}/*/*/*"
+  source_arn    = "${aws_apigatewayv2_api.form_intake_api.execution_arn}/*/*/"
 }
