@@ -118,7 +118,7 @@ def verify_captcha(captcha_response, source_ip):
     )
     request_values = json.loads(request_response.data.decode("utf-8"))
     print(request_values)
-    if request_values["success"] is False:
+    if not request_values.get("success"):
         response_body = """\
 <html>
   <head></head>
