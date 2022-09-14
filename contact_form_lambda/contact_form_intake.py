@@ -5,7 +5,7 @@ import boto3
 import urllib3
 
 
-def lambda_handler(event, context): # pylint: disable=unused-argument
+def lambda_handler(event, context):  # pylint: disable=unused-argument
     """Main lambda function for execution"""
     print(json.dumps(event))
 
@@ -50,11 +50,12 @@ def lambda_handler(event, context): # pylint: disable=unused-argument
     source_ip = event["requestContext"]["http"]["sourceIp"]
     captcha = string_dict["g-recaptcha-response"]
 
-    response_body = verify_captcha(captcha, source_ip)
+    response_body, captcha_success = verify_captcha(captcha, source_ip)
 
     customer_email = string_dict["CustomerEmail"]
     customer_message = string_dict["MessageDetails"]
-    send_email(customer_email, customer_message)
+    if captcha_success:
+        send_email(customer_email, customer_message)
 
     return {
         "statusCode": 200,
@@ -118,7 +119,7 @@ def verify_captcha(captcha_response, source_ip):
     )
     request_values = json.loads(request_response.data.decode("utf-8"))
     print(request_values)
-    if request_values["success"] == False: # pylint: disable=singleton-comparison
+    if request_values["success"] is False:
         response_body = """\
 <html>
   <head></head>
@@ -130,7 +131,8 @@ def verify_captcha(captcha_response, source_ip):
   </body>
 </html>
 """
-        return response_body
+        captcha_success = False
+        return response_body, captcha_success
     response_body = """\
 <html>
 <head></head>
@@ -142,7 +144,8 @@ def verify_captcha(captcha_response, source_ip):
 </body>
 </html>
 """
-    return response_body
+    captcha_success = True
+    return response_body, captcha_success
 
 
 def get_param():
