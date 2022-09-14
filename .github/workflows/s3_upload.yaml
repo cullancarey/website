@@ -3,10 +3,8 @@ name: S3 Deploy and Cloudfront Cache Clear
 on:
   workflow_run:
     workflows: ["Terraform Deploy"]
-    types:
-      - completed
-    branches:
-      - main
+    types: [completed]
+    branches: [main]
 
 jobs:
   deploy:

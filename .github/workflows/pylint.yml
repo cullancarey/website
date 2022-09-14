@@ -3,11 +3,10 @@ name: Pylint
 on:
   workflow_run:
     workflows: ["Black Formatter"]
-    types:
-      - completed
-      
+    types: [completed]
+
 jobs:
-  build:
+  run-pylint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
