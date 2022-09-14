@@ -23,5 +23,5 @@ jobs:
       run: aws s3 sync ./src/ s3://cullancarey.com --delete
 
     - name: Invalidate Cloudfront Cache
-      run: aws aws cloudfront create-invalidation --distribution-id E5FDMTLPHUTLTL --paths '/*'
+      run: aws cloudfront create-invalidation --distribution-id E1EM2WQ96D3J54 --paths '/*'
 
