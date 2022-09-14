@@ -28,6 +28,7 @@ def lambda_handler(event, context):  # pylint: disable=unused-argument
 
     # Catch dumb bots
     if string_dict.get("contact_me_by_fax_only", False):
+        print("Honeypot field filled out, bot detected.")
         response_body = """\
 <html>
 <head></head>
@@ -55,6 +56,7 @@ def lambda_handler(event, context):  # pylint: disable=unused-argument
     customer_email = string_dict["CustomerEmail"]
     customer_message = string_dict["MessageDetails"]
     if captcha_success:
+        print("Captcha successful, sending email...")
         send_email(customer_email, customer_message)
 
     return {
@@ -118,8 +120,8 @@ def verify_captcha(captcha_response, source_ip):
         },
     )
     request_values = json.loads(request_response.data.decode("utf-8"))
-    print(request_values)
     if request_values["success"] is False:
+        print(f"Captcha failed do to error: {request_values['error-codes']}")
         response_body = """\
 <html>
   <head></head>
@@ -151,5 +153,6 @@ def verify_captcha(captcha_response, source_ip):
 def get_param():
     """Function to get parameter value from parameter store for captcha verification"""
     client = boto3.client("ssm")
+    print("Getting captcha paramter...")
     response = client.get_parameter(Name="google_captcha_secret", WithDecryption=True)
     return response["Parameter"]["Value"]
