@@ -16,7 +16,7 @@ terraform {
 }
 
 provider "aws" {
-  alias = "cloudfront-certificate"
+  alias  = "cloudfront-certificate"
   region = "us-east-1"
   default_tags {
     tags = {
@@ -26,7 +26,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "backup-website-region"
+  alias  = "backup-website-region"
   region = "us-east-1"
   default_tags {
     tags = {
