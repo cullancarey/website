@@ -21,8 +21,10 @@ jobs:
         aws-region: us-east-2
 
     - name: Deploy static site to S3 bucket
+      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       run: aws s3 sync ./src/ s3://cullancarey.com --delete
 
     - name: Invalidate Cloudfront Cache
+      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       run: aws cloudfront create-invalidation --distribution-id E1EM2WQ96D3J54 --paths '/*'
 
