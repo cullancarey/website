@@ -45,16 +45,9 @@ jobs:
       run: terraform fmt -check
       continue-on-error: false
 
-
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
-      continue-on-error: false
-
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      id: plan
-      run: terraform plan -input=false
       continue-on-error: false
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
