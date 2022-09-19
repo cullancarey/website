@@ -65,6 +65,7 @@ jobs:
 
 
   deploy-files-to-S3:
+    needs: terraform
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
