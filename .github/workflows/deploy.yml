@@ -1,10 +1,9 @@
-name: 'Terraform Deploy'
+name: 'Deploy'
 
 on:
-  workflow_run:
-    workflows: ["Pylint"]
-    types: [completed]
-    branches: [main]
+  pull_request:
+    branches:
+      - main
 
 jobs:
   terraform:
@@ -62,5 +61,24 @@ jobs:
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
       id: apply
-      if: github.ref == 'refs/heads/"main"'
       run: terraform apply --auto-approve -input=false
+
+
+  deploy-files-to-S3:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
+
+    - name: Deploy static site to S3 bucket
+      run: aws s3 sync ./src/ s3://cullancarey.com --delete
+
+    - name: Invalidate Cloudfront Cache
+      run: aws cloudfront create-invalidation --distribution-id E1EM2WQ96D3J54 --paths '/*'
