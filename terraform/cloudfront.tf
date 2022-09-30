@@ -65,13 +65,13 @@ resource "aws_cloudfront_distribution" "website_distribution" {
   }
 
   default_cache_behavior {
-    viewer_protocol_policy = "https-only"
-    compress               = true
-    allowed_methods        = ["GET", "HEAD"]
-    cached_methods         = ["GET", "HEAD"]
-    target_origin_id       = "HA-website"
-    cache_policy_id        = data.aws_cloudfront_cache_policy.cache_policy.id
-    smooth_streaming       = false
+    viewer_protocol_policy     = "https-only"
+    compress                   = true
+    allowed_methods            = ["GET", "HEAD"]
+    cached_methods             = ["GET", "HEAD"]
+    target_origin_id           = "HA-website"
+    cache_policy_id            = data.aws_cloudfront_cache_policy.cache_policy.id
+    smooth_streaming           = false
     response_headers_policy_id = data.aws_cloudfront_response_headers_policy.response_cache_policy.id
   }
 
