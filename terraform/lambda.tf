@@ -34,7 +34,7 @@ resource "aws_lambda_function" "contact_form_intake_lambda" {
   function_name = "contact_form_intake"
   role          = aws_iam_role.iam_for_contact_intake_lambda.arn
   handler       = "contact_form_intake.lambda_handler"
-  description   = "Lambda function for intake of contact form details from cullancarey.com"
+  description   = "Lambda function for intake of contact form details from ${var.root_domain_name}"
 
   source_code_hash = data.archive_file.contact_form_lambda_zip.output_base64sha256
 
@@ -64,7 +64,7 @@ resource "aws_iam_policy" "contact_form_lambda_iam_policy" {
                 "logs:CreateLogGroup"
             ],
             "Resource": [
-                "arn:aws:ses:us-east-2:${local.account_id}:identity/cullan.click",
+                "arn:aws:ses:us-east-2:${local.account_id}:identity/${var.root_domain_name}",
                 "arn:aws:ses:us-east-2:${local.account_id}:identity/cullancarey@yahoo.com",
                 "arn:aws:logs:us-east-2:${local.account_id}:*"
             ]
