@@ -2,7 +2,7 @@ provider "aws" {
   region = "us-east-2"
   default_tags {
     tags = {
-      Project = "portfolio-website"
+      Project     = "portfolio-website"
       Environment = "${var.environment}"
     }
   }
@@ -18,7 +18,7 @@ provider "aws" {
   region = "us-east-1"
   default_tags {
     tags = {
-      Project = "portfolio-website"
+      Project     = "portfolio-website"
       Environment = "${var.environment}"
     }
   }
@@ -29,7 +29,7 @@ provider "aws" {
   region = "us-east-1"
   default_tags {
     tags = {
-      Project = "portfolio-website"
+      Project     = "portfolio-website"
       Environment = "${var.environment}"
     }
   }
