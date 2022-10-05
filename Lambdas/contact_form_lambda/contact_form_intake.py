@@ -1,5 +1,6 @@
 """is a lightweight data interchange format inspired by JavaScript object literal syntax."""
 import json
+import os
 import base64
 import boto3
 import urllib3
@@ -90,14 +91,14 @@ def send_email(customer_email, customer_message):
 """
 
     client.send_email(
-        Source="noreply@cullancarey.com",
+        Source=f"noreply@{os.environ['website']}",
         Destination={
             "ToAddresses": [
                 "cullancarey@yahoo.com",
             ]
         },
         Message={
-            "Subject": {"Data": "Inquiry from cullancarey.com"},
+            "Subject": {"Data": f"Inquiry from {os.environ['website']}"},
             "Body": {"Text": {"Data": text_email}, "Html": {"Data": html_email}},
         },
         ReplyToAddresses=[
@@ -135,13 +136,13 @@ def verify_captcha(captcha_response, source_ip):
 """
         captcha_success = False
         return response_body, captcha_success
-    response_body = """\
+    response_body = f"""\
 <html>
 <head></head>
 <body>
 <p>Thank you!<br>
    Cullan will get back to you shortly.<br>
-   In the meantime, lets go <a href="https://www.cullancarey.com">back</a> to the website.
+   In the meantime, lets go <a href="https://{os.environ['website']}">back</a> to the website.
 </p>
 </body>
 </html>
@@ -154,5 +155,5 @@ def get_param():
     """Function to get parameter value from parameter store for captcha verification"""
     client = boto3.client("ssm")
     print("Getting captcha paramter...")
-    response = client.get_parameter(Name="google_captcha_secret", WithDecryption=True)
+    response = client.get_parameter(Name=f"{os.environ['environment']}_google_captcha_secret", WithDecryption=True) # pylint: disable=line-too-long
     return response["Parameter"]["Value"]

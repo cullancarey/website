@@ -3,6 +3,7 @@ provider "aws" {
   default_tags {
     tags = {
       Project     = "portfolio-website"
+      Website     = "${var.root_domain_name}"
       Environment = "${var.environment}"
     }
   }
@@ -19,6 +20,7 @@ provider "aws" {
   default_tags {
     tags = {
       Project     = "portfolio-website"
+      Website     = "${var.root_domain_name}"
       Environment = "${var.environment}"
     }
   }
@@ -30,6 +32,7 @@ provider "aws" {
   default_tags {
     tags = {
       Project     = "portfolio-website"
+      Website     = "${var.root_domain_name}"
       Environment = "${var.environment}"
     }
   }
