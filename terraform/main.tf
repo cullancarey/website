@@ -3,15 +3,13 @@ provider "aws" {
   default_tags {
     tags = {
       Project = "portfolio-website"
+      Environment = "${environment}"
     }
   }
 }
 
 terraform {
   backend "s3" {
-    bucket = "terraform-045107234435"
-    key    = "portfolio-website.tfstate"
-    region = "us-east-2"
   }
 }
 
@@ -21,6 +19,7 @@ provider "aws" {
   default_tags {
     tags = {
       Project = "portfolio-website"
+      Environment = "${environment}"
     }
   }
 }
@@ -31,6 +30,7 @@ provider "aws" {
   default_tags {
     tags = {
       Project = "portfolio-website"
+      Environment = "${environment}"
     }
   }
 }

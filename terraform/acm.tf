@@ -15,6 +15,9 @@ resource "aws_acm_certificate" "cloudfront_certificate" {
   tags = {
     Name = "website-certificate"
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 
 }
 
@@ -38,6 +41,9 @@ resource "aws_acm_certificate" "intake_api_certificate" {
   }
   tags = {
     Name = "intake_api_certificate"
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 
 }
