@@ -84,7 +84,7 @@ resource "aws_iam_policy" "contact_form_lambda_iam_policy" {
             "Action": [
                 "ssm:GetParameter"
             ],
-            "Resource": "arn:aws:ssm:us-east-2:${local.account_id}:parameter/google_captcha_secret"
+            "Resource": "arn:aws:ssm:us-east-2:${local.account_id}:parameter/${var.environment}_google_captcha_secret"
         }
     ]
 }
