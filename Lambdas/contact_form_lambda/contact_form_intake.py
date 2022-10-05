@@ -6,7 +6,7 @@ import boto3
 import urllib3
 
 
-def lambda_handler(event, context):  # pylint: disable=unused-argument
+def lambda_handler(event, context):
     """Main lambda function for execution"""
     print(json.dumps(event))
 
@@ -155,5 +155,5 @@ def get_param():
     """Function to get parameter value from parameter store for captcha verification"""
     client = boto3.client("ssm")
     print("Getting captcha paramter...")
-    response = client.get_parameter(Name=f"{os.environ['environment']}_google_captcha_secret", WithDecryption=True) # pylint: disable=line-too-long
+    response = client.get_parameter(Name=f"{os.environ['environment']}_google_captcha_secret", WithDecryption=True)
     return response["Parameter"]["Value"]
