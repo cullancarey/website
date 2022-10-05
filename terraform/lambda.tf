@@ -40,7 +40,7 @@ resource "aws_lambda_function" "contact_form_intake_lambda" {
 
   environment {
     variables = {
-      website = "${var.root_domain_name}"
+      website     = "${var.root_domain_name}"
       environment = "${var.environment}"
     }
   }
