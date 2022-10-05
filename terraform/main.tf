@@ -3,7 +3,7 @@ provider "aws" {
   default_tags {
     tags = {
       Project = "portfolio-website"
-      Environment = "${environment}"
+      Environment = "${var.environment}"
     }
   }
 }
@@ -19,7 +19,7 @@ provider "aws" {
   default_tags {
     tags = {
       Project = "portfolio-website"
-      Environment = "${environment}"
+      Environment = "${var.environment}"
     }
   }
 }
@@ -30,7 +30,7 @@ provider "aws" {
   default_tags {
     tags = {
       Project = "portfolio-website"
-      Environment = "${environment}"
+      Environment = "${var.environment}"
     }
   }
 }
