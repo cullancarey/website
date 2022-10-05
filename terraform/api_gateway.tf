@@ -5,7 +5,7 @@
 resource "aws_apigatewayv2_api" "form_intake_api" {
   name          = "contact_form_intake_api"
   protocol_type = "HTTP"
-  description   = "API gateway resource for intake of the contact for on cullancarey.com"
+  description   = "API gateway resource for intake of the contact for on ${var.root_domain_name}"
 
 }
 
