@@ -10,6 +10,6 @@ variable "intake_api_domain" {
 }
 
 variable "environment" {
-  type = string
+  type        = string
   description = "The environment of the website."
 }
