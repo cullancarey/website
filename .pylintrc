@@ -1,5 +1,2 @@
 [MASTER]
-disable= 
-line-too-long,
-unused-argument,
-import-error
+disable=line-too-long,unused-argument,import-error
