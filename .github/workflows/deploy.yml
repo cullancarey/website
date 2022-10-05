@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
 
 jobs:
   terraform:
@@ -21,12 +22,22 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-      # Configure AWS Creds
-    - name: Configure AWS Credentials
+    # Configure AWS Creds PROD
+    - name: Configure AWS Credentials Prod
+      if: endsWith(github.ref, '/main')
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
+
+    # Configure AWS Creds DEV
+    - name: Configure AWS Credentials Dev
+      if: endsWith(github.ref, '/develop')
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2
 
     # Install the latest version of Terraform CLI
@@ -36,7 +47,7 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: init
-      run: terraform init -backend-config=backend.prod.conf
+      run: terraform init -backend-config=backend.$GITHUB_REF_NAME.conf
       continue-on-error: false
 
     # Checks that all Terraform configuration files adhere to a canonical format
@@ -53,7 +64,7 @@ jobs:
       # On push to "main", build or change infrastructure according to Terraform configuration files
     - name: Terraform Apply
       id: apply
-      run: terraform apply --auto-approve -input=false
+      run: terraform apply --auto-approve -input=false -var-file="$GITHUB_REF_NAME.tfvars"
 
 
   deploy-files-to-S3:
@@ -63,15 +74,34 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Configure AWS Credentials
+    - name: Configure AWS Credentials Prod
+      if: endsWith(github.ref, '/main')
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2
 
-    - name: Deploy static site to S3 bucket
-      run: aws s3 sync ./src/ s3://cullancarey.com --delete --size-only
+    - name: Configure AWS Credentials Dev
+      if: endsWith(github.ref, '/develop')
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
 
-    - name: Invalidate Cloudfront Cache
+    - name: Deploy static site to S3 bucket Prod
+      if: endsWith(github.ref, '/main')
+      run: aws s3 sync ./src/$GITHUB_REF_NAME/ s3://cullancarey.com --delete --size-only
+
+    - name: Deploy static site to S3 bucket Dev
+      if: endsWith(github.ref, '/develop')
+      run: aws s3 sync ./src/$GITHUB_REF_NAME/ s3://cullan.click --delete --size-only
+
+    - name: Invalidate Cloudfront Cache Prod
+      if: endsWith(github.ref, '/main')
       run: aws cloudfront create-invalidation --distribution-id E1EM2WQ96D3J54 --paths '/*'
+
+    - name: Invalidate Cloudfront Cache Dev
+      if: endsWith(github.ref, '/develop')
+      run: aws cloudfront create-invalidation --distribution-id E16GLUTJR4O4CK --paths '/*'

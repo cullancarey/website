@@ -38,6 +38,13 @@ resource "aws_lambda_function" "contact_form_intake_lambda" {
 
   source_code_hash = data.archive_file.contact_form_lambda_zip.output_base64sha256
 
+  environment {
+    variables = {
+      website     = "${var.root_domain_name}"
+      environment = "${var.environment}"
+    }
+  }
+
   runtime = "python3.9"
   timeout = 300
 }
@@ -57,7 +64,7 @@ resource "aws_iam_policy" "contact_form_lambda_iam_policy" {
                 "logs:CreateLogGroup"
             ],
             "Resource": [
-                "arn:aws:ses:us-east-2:${local.account_id}:identity/cullancarey.com",
+                "arn:aws:ses:us-east-2:${local.account_id}:identity/cullan.click",
                 "arn:aws:ses:us-east-2:${local.account_id}:identity/cullancarey@yahoo.com",
                 "arn:aws:logs:us-east-2:${local.account_id}:*"
             ]
@@ -77,7 +84,7 @@ resource "aws_iam_policy" "contact_form_lambda_iam_policy" {
             "Action": [
                 "ssm:GetParameter"
             ],
-            "Resource": "arn:aws:ssm:us-east-2:${local.account_id}:parameter/google_captcha_secret"
+            "Resource": "arn:aws:ssm:us-east-2:${local.account_id}:parameter/${var.environment}_google_captcha_secret"
         }
     ]
 }

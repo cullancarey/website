@@ -6,6 +6,10 @@ variable "root_domain_name" {
 
 variable "intake_api_domain" {
   type        = string
-  default     = "form.cullancarey.com"
   description = "The domain name of the api gateway resource that intakes the websites contact form."
+}
+
+variable "environment" {
+  type        = string
+  description = "The environment of the website."
 }
