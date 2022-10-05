@@ -64,7 +64,7 @@ resource "aws_iam_policy" "contact_form_lambda_iam_policy" {
                 "logs:CreateLogGroup"
             ],
             "Resource": [
-                "arn:aws:ses:us-east-2:${local.account_id}:identity/cullancarey.com",
+                "arn:aws:ses:us-east-2:${local.account_id}:identity/cullan.click",
                 "arn:aws:ses:us-east-2:${local.account_id}:identity/cullancarey@yahoo.com",
                 "arn:aws:logs:us-east-2:${local.account_id}:*"
             ]
