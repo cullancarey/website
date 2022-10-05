@@ -38,6 +38,13 @@ resource "aws_lambda_function" "contact_form_intake_lambda" {
 
   source_code_hash = data.archive_file.contact_form_lambda_zip.output_base64sha256
 
+  environment {
+    variables = {
+      website = "${var.root_domain_name}"
+      environment = "${var.environment}"
+    }
+  }
+
   runtime = "python3.9"
   timeout = 300
 }
