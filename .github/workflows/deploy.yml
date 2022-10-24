@@ -5,6 +5,12 @@ on:
     branches:
       - main
       - develop
+  workflow_run:
+    workflows: ["Format Code"]
+    types: [completed]
+    branches:
+      - main
+      - develop
 
 jobs:
   terraform:
