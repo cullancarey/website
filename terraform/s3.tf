@@ -77,7 +77,7 @@ resource "aws_s3_bucket_policy" "website-bucket-policy" {
         "Resource": "${aws_s3_bucket.website.arn}/*",
         "Condition": {
             "StringEquals": {
-                "AWS:SourceArn": ["${aws_cloudfront_distribution.website_distribution.arn}", "${aws_cloudfront_origin_access_identity.website_OAI.iam_arn}"]
+                "AWS:SourceArn": "${aws_cloudfront_distribution.website_distribution.arn}"
             }
         }
     }
@@ -160,7 +160,7 @@ resource "aws_s3_bucket_policy" "backup-website-bucket-policy" {
         "Resource": "${aws_s3_bucket.backup-website.arn}/*",
         "Condition": {
             "StringEquals": {
-                "AWS:SourceArn": ["${aws_cloudfront_distribution.website_distribution.arn}", "${aws_cloudfront_origin_access_identity.website_OAI.iam_arn}"]
+                "AWS:SourceArn": "${aws_cloudfront_distribution.website_distribution.arn}"
             }
         }
     }
