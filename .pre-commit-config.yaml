@@ -37,4 +37,4 @@ repos:
     - id: terraform_tflint
     - id: terraform_checkov
       args:
-        - --args=--config-file=".checkov.yaml"
+        - --args=--config-file=__GIT_WORKING_DIR__/.checkov.yaml
