@@ -13,4 +13,4 @@ Terraform fully manages the website infrastructure, as seen in the [terraform](.
 
 
 ### Disclosure
-I did not write the HTML for this website. I am not a website developer, so I used a template from [HTML5 UP](http://html5up.net) and filled in the necessary details. 
+I did not write the HTML for this website. I am not a website developer, so I used a template from [HTML5 UP](http://html5up.net) and filled in the necessary details.
