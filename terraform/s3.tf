@@ -188,7 +188,7 @@ resource "aws_iam_role" "replication" {
   ]
 }
 
-POLICY 
+POLICY
 }
 
 

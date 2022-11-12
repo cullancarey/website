@@ -155,5 +155,7 @@ def get_param():
     """Function to get parameter value from parameter store for captcha verification"""
     client = boto3.client("ssm")
     print("Getting captcha paramter...")
-    response = client.get_parameter(Name=f"{os.environ['environment']}_google_captcha_secret", WithDecryption=True)
+    response = client.get_parameter(
+        Name=f"{os.environ['environment']}_google_captcha_secret", WithDecryption=True
+    )
     return response["Parameter"]["Value"]

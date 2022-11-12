@@ -1,6 +1,6 @@
 name: Format Code
 
-on: 
+on:
   push:
     branches-ignore:
       - main
@@ -50,5 +50,5 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         with:
           directory: terraform/
-          framework: terraform 
+          framework: terraform
           config_file: .checkov.yaml
