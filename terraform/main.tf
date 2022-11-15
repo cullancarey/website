@@ -3,8 +3,8 @@ provider "aws" {
   default_tags {
     tags = {
       Project     = "portfolio-website"
-      Website     = "${var.root_domain_name}"
-      Environment = "${var.environment}"
+      Website     = var.root_domain_name
+      Environment = var.environment
     }
   }
 }
@@ -12,7 +12,19 @@ provider "aws" {
 terraform {
   backend "s3" {
   }
+  required_providers {
+    aws = {
+      version = "~> 4.38.0"
+    }
+    archive = {
+      version = "~> 2.2.0"
+    }
+  }
+
+  required_version = "~> 1.3.4"
 }
+
+provider "archive" {}
 
 provider "aws" {
   alias  = "cloudfront-certificate"
@@ -20,8 +32,8 @@ provider "aws" {
   default_tags {
     tags = {
       Project     = "portfolio-website"
-      Website     = "${var.root_domain_name}"
-      Environment = "${var.environment}"
+      Website     = var.root_domain_name
+      Environment = var.environment
     }
   }
 }
@@ -32,9 +44,8 @@ provider "aws" {
   default_tags {
     tags = {
       Project     = "portfolio-website"
-      Website     = "${var.root_domain_name}"
-      Environment = "${var.environment}"
+      Website     = var.root_domain_name
+      Environment = var.environment
     }
   }
 }
-

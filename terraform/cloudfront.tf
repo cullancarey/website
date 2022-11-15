@@ -43,7 +43,7 @@ resource "aws_cloudfront_distribution" "website_distribution" {
 
 
 
-  aliases             = ["${var.root_domain_name}", "www.${var.root_domain_name}"]
+  aliases             = [var.root_domain_name, "www.${var.root_domain_name}"]
   enabled             = true
   comment             = "Distribution for ${var.root_domain_name}"
   price_class         = "PriceClass_100"
@@ -98,4 +98,3 @@ data "aws_cloudfront_cache_policy" "cache_policy" {
 data "aws_cloudfront_response_headers_policy" "response_cache_policy" {
   name = "Managed-SecurityHeadersPolicy"
 }
-
