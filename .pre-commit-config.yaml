@@ -7,7 +7,6 @@ repos:
     -   id: check-yaml
     -   id: check-added-large-files
     -   id: pretty-format-json
-    -   id: detect-aws-credentials
     -   id: check-ast
     -   id: detect-private-key
     -   id: end-of-file-fixer
