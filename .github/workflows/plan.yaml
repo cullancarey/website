@@ -35,7 +35,7 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: init
-      run: terraform init -backend-config=backend.$GITHUB_REF_NAME.conf
+      run: terraform init -backend-config=backend.develop.conf
       continue-on-error: false
 
     # Checks that all Terraform configuration files adhere to a canonical format
@@ -52,7 +52,7 @@ jobs:
       # On push to "main", build or change infrastructure according to Terraform configuration files
     - name: Terraform Plan
       id: apply
-      run: terraform plan -input=false -var-file="$GITHUB_REF_NAME.tfvars"
+      run: terraform plan -input=false -var-file="develop.tfvars"
 
 
   prod-terraform:
@@ -87,7 +87,7 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: init
-      run: terraform init -backend-config=backend.$GITHUB_REF_NAME.conf
+      run: terraform init -backend-config=backend.main.conf
       continue-on-error: false
 
     # Checks that all Terraform configuration files adhere to a canonical format
@@ -104,4 +104,4 @@ jobs:
       # On push to "main", build or change infrastructure according to Terraform configuration files
     - name: Terraform Plan
       id: apply
-      run: terraform plan -input=false -var-file="$GITHUB_REF_NAME.tfvars"
+      run: terraform plan -input=false -var-file="main.tfvars"
