@@ -1,15 +1,11 @@
-name: 'Deploy'
+name: 'Plan'
 
-on:
-  push:
-    branches:
-      - develop
-      - main
+on: [pull_request]
 
 jobs:
   dev-terraform:
-    name: 'Dev - Deploy Terraform'
-    if: endsWith(github.ref, '/develop')
+    name: 'Dev - Plan Terraform'
+    if: github.event.pull_request.base.ref == 'develop'
     runs-on: ubuntu-latest
     environment: development
 
@@ -39,7 +35,7 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: init
-      run: terraform init -backend-config=backend.$GITHUB_REF_NAME.conf
+      run: terraform init -backend-config=backend.develop.conf
       continue-on-error: false
 
     # Checks that all Terraform configuration files adhere to a canonical format
@@ -54,39 +50,14 @@ jobs:
       continue-on-error: false
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
-    - name: Terraform Apply
+    - name: Terraform Plan
       id: apply
-      run: terraform apply --auto-approve -input=false -var-file="$GITHUB_REF_NAME.tfvars"
-
-
-  dev-deploy-files-to-S3:
-    name: 'Dev - Deploy files to S3'
-    if: endsWith(github.ref, '/develop')
-    needs: terraform
-    runs-on: ubuntu-latest
-    environment: development
-    url: https://cullan.click
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Configure AWS Credentials Dev
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-2
-
-    - name: Deploy static site to S3 bucket Dev
-      run: aws s3 sync ./src/$GITHUB_REF_NAME/ s3://cullan.click --delete --size-only
-
-    - name: Invalidate Cloudfront Cache Dev
-      run: aws cloudfront create-invalidation --distribution-id E16GLUTJR4O4CK --paths '/*'
+      run: terraform plan -input=false -var-file="develop.tfvars"
 
 
   prod-terraform:
-    name: 'Prod - Deploy Terraform'
-    if: endsWith(github.ref, '/main')
+    name: 'Prod - Plan Terraform'
+    if: github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     environment: production
 
@@ -101,7 +72,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # Configure AWS Creds DEV
+    # Configure AWS Creds Prod
     - name: Configure AWS Credentials Prod
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -116,7 +87,7 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: init
-      run: terraform init -backend-config=backend.$GITHUB_REF_NAME.conf
+      run: terraform init -backend-config=backend.main.conf
       continue-on-error: false
 
     # Checks that all Terraform configuration files adhere to a canonical format
@@ -131,31 +102,6 @@ jobs:
       continue-on-error: false
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
-    - name: Terraform Apply
+    - name: Terraform Plan
       id: apply
-      run: terraform apply --auto-approve -input=false -var-file="$GITHUB_REF_NAME.tfvars"
-
-
-  prod-deploy-files-to-S3:
-    name: 'Prod - Deploy files to S3'
-    if: endsWith(github.ref, '/main')
-    needs: terraform
-    runs-on: ubuntu-latest
-    environment: production
-    url: https://cullancarey.com
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Configure AWS Credentials Prod
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-2
-
-    - name: Deploy static site to S3 bucket Prod
-      run: aws s3 sync ./src/$GITHUB_REF_NAME/ s3://cullancarey.com --delete --size-only
-
-    - name: Invalidate Cloudfront Cache Prod
-      run: aws cloudfront create-invalidation --distribution-id E1EM2WQ96D3J54 --paths '/*'
+      run: terraform plan -input=false -var-file="main.tfvars"
