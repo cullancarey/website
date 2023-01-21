@@ -5,7 +5,7 @@ on: [pull_request]
 jobs:
   dev-terraform:
     name: 'Dev - Plan Terraform'
-    if: endsWith(github.base_ref, '/develop')
+    if: github.event.pull_request.base.ref == 'develop'
     runs-on: ubuntu-latest
     environment: development
 
@@ -57,7 +57,7 @@ jobs:
 
   prod-terraform:
     name: 'Prod - Plan Terraform'
-    if: endsWith(github.base_ref, '/main')
+    if: github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     environment: production
 
