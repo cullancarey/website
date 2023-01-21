@@ -64,8 +64,9 @@ jobs:
     if: endsWith(github.ref, '/develop')
     needs: terraform
     runs-on: ubuntu-latest
-    environment: development
-    url: https://cullan.click
+    environment:
+      name: development
+      url: https://cullan.click
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -141,8 +142,9 @@ jobs:
     if: endsWith(github.ref, '/main')
     needs: terraform
     runs-on: ubuntu-latest
-    environment: production
-    url: https://cullancarey.com
+    environment:
+      name: production
+      url: https://cullancarey.com
     steps:
     - name: Checkout
       uses: actions/checkout@v2
