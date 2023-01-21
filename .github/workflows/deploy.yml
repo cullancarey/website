@@ -62,7 +62,7 @@ jobs:
   dev-deploy-files-to-S3:
     name: 'Dev - Deploy files to S3'
     if: endsWith(github.ref, '/develop')
-    needs: terraform
+    needs: dev-terraform
     runs-on: ubuntu-latest
     environment:
       name: development
@@ -140,7 +140,7 @@ jobs:
   prod-deploy-files-to-S3:
     name: 'Prod - Deploy files to S3'
     if: endsWith(github.ref, '/main')
-    needs: terraform
+    needs: prod-terraform
     runs-on: ubuntu-latest
     environment:
       name: production
