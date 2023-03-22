@@ -86,7 +86,7 @@ jobs:
       run: aws s3 sync ./src/$GITHUB_REF_NAME/ s3://cullan.click --delete --size-only
 
     - name: Invalidate Cloudfront Cache Dev
-      run: aws cloudfront create-invalidation --distribution-id E16GLUTJR4O4CK --paths '/*'
+      run: aws cloudfront create-invalidation --distribution-id E15AY619D905H7 --paths '/*'
 
 
   prod-terraform:
