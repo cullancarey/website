@@ -62,7 +62,12 @@
 						<div class="image arch">
 							<img src="images/cullancarey-website-architecture.png" alt="" />
 						</div>
-						Two GitHub Actions workflows kick off when I push changes to the GitHub repository. The first workflow focuses on code formatting and IaC security utilizing Black, Pylint, and Checkov. The second workflow deploys the terraform, pushes the website files to S3, and invalidates the Cloudfront cache, making the updates available immediately. This website is highly available. The main website bucket replicates to the failover bucket in a different region. Access to the S3 bucket is restricted to the Cloudfront OAI. All code is available for viewing in the <a href="https://github.com/cullancarey/website" target="_blank">GitHub repository</a>. Building cullancarey.com was a fun project and a valuable experience.</p>
+						This website is highly available. The main website bucket replicates to the failover bucket in a different region. Access to the S3 bucket is restricted to the Cloudfront OAI. All code is available for viewing in the <a href="https://github.com/cullancarey/website" target="_blank">GitHub repository</a>. Building cullancarey.com was a fun project and a valuable experience.</p>
+						<h3>Deployment Automation</h3>
+						<p>The automation for this repo's deployment utilized a Cloudformation StackSet set up for my aws organization. My <a href="https://github.com/cullancarey/aws_deployment_roles" target="_blank">aws_deployment-roles</a> repo holds CDK code which defines the Cloudformation stack set that deploys the deployment roles to the member accounts of my organization. I have created an OIDC GitHub Actions user in my management account. The actions first assume this role and then use this role to assume the deployment roles in the member accounts. Below is a diagram showing the flow of this architecture.
+						<div class="image arch">
+							<img src="images/website_automation_arch.png" alt="" />
+						</div></p>
 					</div>
 				</section>
 
