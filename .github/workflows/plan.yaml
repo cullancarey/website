@@ -35,7 +35,7 @@ jobs:
     - name: Configure AWS Credentials Dev
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        role-to-assume: arn:aws:iam::${{ vars.ACCOUNT_ID }}:role/${{ vars.TERRAFORMDEPLOYROLE_DEVELOP}}
+        role-to-assume: arn:aws:iam::${{ vars.ACCOUNT_ID }}:role/TerraformDeploymentRole-${{ vars.REGION }}-${{ vars.ACCOUNT_ID }}
         role-session-name: GithubActionsDevPlanSession
         aws-region: ${{ vars.REGION }}
 
