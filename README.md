@@ -6,7 +6,7 @@ Cullancarey.com is a static AWS S3 website fronted by Cloudfront. Please see the
 ## Automation
 The automation for this repo's deployment utilized stack sets set up for my aws organization. My [aws_deployment-roles](https://github.com/cullancarey/aws_deployment_roles) repo holds CDK code which defines the Cloudformation stack set that deploys the deployment roles to the member accounts of my organization. I have created an OIDC GitHub Actions user in my management account. The actions first assume this role and then use this role to assume the deployment roles in the member accounts. Below is a diagram showing the flow of this architecture.
 
-![image](./website_automation_arch.drawio.png)
+![image](./website_automation_arch.png)
 
 The below outlines the workflow files and their purposes:
 
