@@ -35,11 +35,7 @@ jobs:
       run: aws sts get-caller-identity
 
     - name: Configure AWS Credentials Dev
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        role-to-assume: arn:aws:iam::${{ vars.ACCOUNT_ID }}:role/TerraformDeploymentRole-${{ vars.REGION }}-${{ vars.ACCOUNT_ID }}
-        role-session-name: GithubActionsDevPlanSession
-        aws-region: ${{ vars.REGION }}
+      run: aws sts assume-role --role-arn arn:aws:iam::${{ vars.ACCOUNT_ID }}:role/TerraformDeploymentRole-${{ vars.REGION }}-${{ vars.ACCOUNT_ID }}
 
     # Install the latest version of Terraform CLI
     - name: Setup Terraform
