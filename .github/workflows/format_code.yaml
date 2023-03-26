@@ -22,7 +22,6 @@ jobs:
         black $(git ls-files 'Lambdas/')
 
   run-pylint:
-    needs: format-black
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -38,7 +37,6 @@ jobs:
 
 
   checkov:
-    needs: run-pylint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
