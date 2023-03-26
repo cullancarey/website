@@ -29,7 +29,6 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v2
       with:
         role-to-assume: arn:aws:iam::${{ vars.MANAGEMENT_ACCOUNT_ID }}:role/${{ vars.GITHUBDEPLOYROLE_MANAGEMENT }}
-        role-session-name: GithubActionsManagementDev
         aws-region: ${{ vars.REGION }}
 
     - name: Call sts get-caller-identity
