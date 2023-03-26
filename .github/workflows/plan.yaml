@@ -28,16 +28,16 @@ jobs:
     - name: Configure AWS Credentials Management
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        role-to-assume: arn:aws:iam::${{ var.ACCOUNT_ID }}:role/${{ var.GITHUBDEPLOYROLE_MANAGEMENT }}
+        role-to-assume: arn:aws:iam::${{ vars.ACCOUNT_ID }}:role/${{ vars.GITHUBDEPLOYROLE_MANAGEMENT }}
         role-session-name: GithubActionsManagementDev
-        aws-region: ${{ var.REGION }}
+        aws-region: ${{ vars.REGION }}
 
     - name: Configure AWS Credentials Dev
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        role-to-assume: arn:aws:iam::${{ var.ACCOUNT_ID }}:role/${{ var.TERRAFORMDEPLOYROLE_DEVELOP}}
+        role-to-assume: arn:aws:iam::${{ vars.ACCOUNT_ID }}:role/${{ vars.TERRAFORMDEPLOYROLE_DEVELOP}}
         role-session-name: GithubActionsDevPlanSession
-        aws-region: ${{ var.REGION }}
+        aws-region: ${{ vars.REGION }}
 
     # Install the latest version of Terraform CLI
     - name: Setup Terraform
