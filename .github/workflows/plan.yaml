@@ -22,7 +22,7 @@ jobs:
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     # Configure AWS Creds DEV
     - name: Configure AWS Credentials Management
@@ -31,6 +31,9 @@ jobs:
         role-to-assume: arn:aws:iam::${{ vars.MANAGEMENT_ACCOUNT_ID }}:role/${{ vars.GITHUBDEPLOYROLE_MANAGEMENT }}
         role-session-name: GithubActionsManagementDev
         aws-region: ${{ vars.REGION }}
+
+    - name: Call sts get-caller-identity
+      run: aws sts get-caller-identity
 
     - name: Configure AWS Credentials Dev
       uses: aws-actions/configure-aws-credentials@v2
