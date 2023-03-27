@@ -58,11 +58,11 @@
 				<section id="two">
 					<div class="container">
 						<h3>About this website</h3>
-						<p>First, I did not write the code that drives what you see on this website. I am not a website developer, so I used a template from <a href="http://html5up.net" target="_blank">HTML5 UP</a> and filled in the necessary details. I did, however, build the infrastructure using Amazon Web Services. cullan.click is a static AWS S3 website fronted by Cloudfront. Please see the architecture diagram below.
+						<p>First, I did not write the code that drives what you see on this website. I am not a website developer, so I used a template from <a href="http://html5up.net" target="_blank">HTML5 UP</a> and filled in the necessary details. I did, however, build the infrastructure using Amazon Web Services. develop.cullancarey.com is a static AWS S3 website fronted by Cloudfront. Please see the architecture diagram below.
 						<div class="image arch">
 							<img src="images/cullancarey-website-architecture.png" alt="" />
 						</div>
-						This website is highly available. The main website bucket replicates to the failover bucket in a different region. Access to the S3 bucket is restricted to the Cloudfront OAI. All code is available for viewing in the <a href="https://github.com/cullancarey/website" target="_blank">GitHub repository</a>. Building cullan.click was a fun project and a valuable experience.</p>
+						This website is highly available. The main website bucket replicates to the failover bucket in a different region. Access to the S3 bucket is restricted to the Cloudfront OAI. All code is available for viewing in the <a href="https://github.com/cullancarey/website" target="_blank">GitHub repository</a>. Building develop.cullancarey.com was a fun project and a valuable experience.</p>
 						<h3>Deployment Automation</h3>
 						<p>The automation for this repo's deployment utilized a Cloudformation StackSet set up for my aws organization. My <a href="https://github.com/cullancarey/aws_deployment_roles" target="_blank">aws_deployment-roles</a> repo holds CDK code which defines the Cloudformation stack set that deploys the deployment roles to the member accounts of my organization. I have created an OIDC GitHub Actions user in my management account. The actions first assume this role and then use this role to assume the deployment roles in the member accounts. Below is a diagram showing the flow of this architecture.
 						<div class="image arch">
@@ -77,7 +77,7 @@
 							<h2>Let's Talk!</h2>
 							<p>Enter your name, email, and a message below to get in contact with me.</p>
 							<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-							<form  action="https://form.cullan.click/" method="post">
+							<form  action="https://form.develop.cullancarey.com/" method="post">
 								<div class="g-recaptcha" data-sitekey="6LcD61giAAAAAGHXBczDgl9WlAu921noVQEGUXLR" data-callback="correctCaptcha"></div>
 								<div class="fields">
 									<div class="field half">
