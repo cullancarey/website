@@ -33,7 +33,7 @@ jobs:
         aws-region: ${{ vars.REGION }}
 
     - name: Configure AWS Credentials Dev
-      run: ./assume_role.sh
+      run: ../assume_role.sh
 
     # Install the latest version of Terraform CLI
     - name: Setup Terraform
