@@ -10,10 +10,7 @@
 name: Publish Docker image
 
 on:
-  push:
-    branches-ignore:
-      - main
-      - develop
+  workflow_dispatch:
 
 jobs:
   push_to_registry:
