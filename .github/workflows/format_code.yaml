@@ -19,5 +19,5 @@ jobs:
     - name: Run black/pylint/checkov
       run: |
         black Lambdas/*
-        pylint --rcfile=.pylintrc Lambdas/*.py
+        pylint --rcfile=.pylintrc Lambdas/contact_form_lambda/*.py
         checkov -d terraform/ --config-file .checkov.yaml
