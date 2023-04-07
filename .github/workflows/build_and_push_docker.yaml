@@ -40,5 +40,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: website-image
+          tags: cullancarey/website:website-image
           labels: ${{ steps.meta.outputs.labels }}
