@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     npm \
+    nodejs \
     git \
     unzip \
     python3.10 \
