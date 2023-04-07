@@ -37,4 +37,4 @@ RUN apt-get update && apt-get install unzip \
     && unzip -o terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/bin
 RUN terraform --version
 
-CMD["/bin/bash"]
+CMD ["/bin/bash"]
