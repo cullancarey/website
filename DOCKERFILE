@@ -1,7 +1,7 @@
 # Dockerfile to run aws cdk commands
 # References
 # - AWS CLI https://levelup.gitconnected.com/how-to-create-a-simple-docker-image-with-aws-cli-and-serverless-installed-d1cc2901946
-FROM ubuntu:latest
+FROM ubuntu:22.10
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     software-properties-common
@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     npm \
-    nodejs \
     git \
     unzip \
     python3.10 \
