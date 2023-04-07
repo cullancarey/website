@@ -2,7 +2,7 @@
 # References
 # - AWS CLI https://levelup.gitconnected.com/how-to-create-a-simple-docker-image-with-aws-cli-and-serverless-installed-d1cc2901946
 FROM ubuntu
-RUN apt update && apt add --update --no-cache \
+RUN apt update && apt add \
     git \
     bash \
     curl \
