@@ -2,7 +2,7 @@
 # References
 # - AWS CLI https://levelup.gitconnected.com/how-to-create-a-simple-docker-image-with-aws-cli-and-serverless-installed-d1cc2901946
 FROM ubuntu
-RUN apk update && apk add --update --no-cache \
+RUN apt update && apt add --update --no-cache \
     git \
     bash \
     curl \
@@ -14,7 +14,7 @@ RUN apk update && apk add --update --no-cache \
     curl \
     nodejs \
     npm
-RUN apk --no-cache add --virtual builds-deps build-base python3
+RUN apt --no-cache add --virtual builds-deps build-base python3
 RUN npm config set unsafe-perm true
 RUN npm update -g
 RUN pip install --upgrade pip && \
