@@ -17,7 +17,7 @@ RUN apk update && apk add --update --no-cache \
 RUN apk --no-cache add --virtual builds-deps build-base python3
 RUN npm config set unsafe-perm true
 RUN npm update -g
-RUN pip install --upgrade pip && \
+RUN pip install --upgrade pip --ignore-installed packaging && \
     pip install --upgrade awscli && \
     pip install black && \
     pip install pylint && \
