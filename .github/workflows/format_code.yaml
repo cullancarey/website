@@ -1,11 +1,16 @@
 name: Format Code
 
 on:
-  workflow_dispatch:
+  push:
+    branches-ignore:
+      - main
+      - develop
 
 jobs:
   run-black-pylint:
     runs-on: ubuntu-latest
+    container:
+      image: cullancarey:website-image
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
