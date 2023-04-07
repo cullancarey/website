@@ -7,21 +7,16 @@ RUN apt-get update && apt-get install -y \
     software-properties-common
 RUN add-apt-repository universe
 RUN apt-get update && apt-get install -y \
-    apache2 \
     curl \
     wget \
     npm \
     nodejs \
     git \
-    libapache2-mod-php5 \
-    php5 \
-    php5-mcrypt \
-    php5-mysql \
     python3.10 \
     python3-pip
 RUN npm config set unsafe-perm true
 RUN npm update -g
-RUN pip install --upgrade pip --ignore-installed packaging && \
+RUN pip install --upgrade pip && \
     pip install --upgrade awscli && \
     pip install black && \
     pip install pylint && \
