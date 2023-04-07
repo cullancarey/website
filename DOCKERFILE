@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     npm \
-    nodejs \
     git \
     python3.10 \
     python3-pip
@@ -22,7 +21,7 @@ RUN pip install --upgrade pip && \
     pip install checkov==2.3.152
 RUN npm install -g aws-cdk
 RUN cdk --version
-RUN sudo apt-get install terraform
+RUN apt-get install terraform
 
 
 
