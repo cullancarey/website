@@ -17,9 +17,9 @@ RUN apk update && apk add --update --no-cache \
 RUN npm config set unsafe-perm true
 RUN npm update -g
 RUN pip install --upgrade pip && \
-    pip install --upgrade awscli
-    pip install black
-    pip install pylint
+    pip install --upgrade awscli && \
+    pip install black && \
+    pip install pylint && \
     pip install checkov
 RUN npm install -g aws-cdk
 RUN cdk --version
@@ -37,4 +37,4 @@ RUN apt-get update && apt-get install unzip \
     && unzip -o terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/bin
 RUN terraform --version
 
-CMD ["/bin/bash"]
+CMD["/bin/bash"]
