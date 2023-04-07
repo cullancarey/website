@@ -1,8 +1,8 @@
 # Dockerfile to run aws cdk commands
 # References
 # - AWS CLI https://levelup.gitconnected.com/how-to-create-a-simple-docker-image-with-aws-cli-and-serverless-installed-d1cc2901946
-FROM ubuntu
-RUN apt update && apt add \
+FROM alpine:3.16.2
+RUN apk update && apk add --update --no-cache \
     git \
     bash \
     curl \
@@ -14,7 +14,7 @@ RUN apt update && apt add \
     curl \
     nodejs \
     npm
-RUN apt --no-cache add --virtual builds-deps build-base python3
+RUN apk --no-cache add --virtual builds-deps build-base python3
 RUN npm config set unsafe-perm true
 RUN npm update -g
 RUN pip install --upgrade pip && \
