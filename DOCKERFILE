@@ -13,7 +13,8 @@ RUN apk update && apk add --update --no-cache \
     wget \
     curl \
     nodejs \
-    npmRUN apk --no-cache add --virtual builds-deps build-base python3
+    npm
+RUN apk --no-cache add --virtual builds-deps build-base python3
 RUN npm config set unsafe-perm true
 RUN npm update -g
 RUN pip install --upgrade pip && \
