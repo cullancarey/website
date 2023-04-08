@@ -20,6 +20,8 @@ RUN pip install --upgrade pip && \
     pip install black && \
     pip install pylint && \
     pip install checkov==2.3.152
+    pip install aws-cdk-lib==2.70.0
+    pip install constructs>=10.0.0,<11.0.0
 RUN npm install -g aws-cdk
 RUN cdk --version
 
