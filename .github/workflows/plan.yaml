@@ -39,7 +39,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend-config=backend.$GITHUB_REF_NAME.conf
+      run: terraform init -backend-config=backend.develop.conf
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -50,7 +50,7 @@ jobs:
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
     - name: Terraform Plan
-      run: terraform plan -input=false -var-file="$GITHUB_REF_NAME.tfvars"
+      run: terraform plan -input=false -var-file="develop.tfvars"
 
     - uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
@@ -143,7 +143,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend-config=backend.$GITHUB_REF_NAME.conf
+      run: terraform init -backend-config=backend.main.conf
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -154,7 +154,7 @@ jobs:
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
     - name: Terraform Plan
-      run: terraform plan -input=false -var-file="$GITHUB_REF_NAME.tfvars"
+      run: terraform plan -input=false -var-file="main.tfvars"
 
     - uses: actions/github-script@v6
       if: github.event_name == 'pull_request'

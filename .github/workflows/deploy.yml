@@ -43,7 +43,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend-config=backend.$GITHUB_REF_NAME.conf
+      run: terraform init -backend-config=backend.develop.conf
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -54,7 +54,7 @@ jobs:
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
     - name: Terraform Apply
-      run: terraform apply --auto-approve -input=false -var-file="$GITHUB_REF_NAME.tfvars"
+      run: terraform apply --auto-approve -input=false -var-file="develop.tfvars"
 
 
   dev-deploy-files-to-S3:
@@ -82,7 +82,7 @@ jobs:
         aws-region: ${{ vars.REGION }}
 
     - name: Deploy static site to S3 bucket Dev
-      run: aws s3 sync ./src/$GITHUB_REF_NAME/ s3://develop.cullancarey.com --delete --size-only
+      run: aws s3 sync ./src/develop/ s3://develop.cullancarey.com --delete --size-only
 
     - name: Invalidate Cloudfront Cache Dev
       run: aws cloudfront create-invalidation --distribution-id E15AY619D905H7 --paths '/*'
@@ -120,7 +120,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend-config=backend.$GITHUB_REF_NAME.conf
+      run: terraform init -backend-config=backend.main.conf
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -131,7 +131,7 @@ jobs:
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
     - name: Terraform Apply
-      run: terraform apply --auto-approve -input=false -var-file="$GITHUB_REF_NAME.tfvars"
+      run: terraform apply --auto-approve -input=false -var-file="main.tfvars"
 
 
   prod-deploy-files-to-S3:
@@ -159,7 +159,7 @@ jobs:
         aws-region: ${{ vars.REGION }}
 
     - name: Deploy static site to S3 bucket Prod
-      run: aws s3 sync ./src/$GITHUB_REF_NAME/ s3://cullancarey.com --delete --size-only
+      run: aws s3 sync ./src/main/ s3://cullancarey.com --delete --size-only
 
     - name: Invalidate Cloudfront Cache Prod
       run: aws cloudfront create-invalidation --distribution-id E1EM2WQ96D3J54 --paths '/*'
