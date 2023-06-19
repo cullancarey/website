@@ -94,7 +94,7 @@ def send_email(customer_email, customer_message):
         Source=f"noreply@{os.environ['website']}",
         Destination={
             "ToAddresses": [
-                "cullancarey@yahoo.com",
+                "cullancareyconsulting@gmail.com",
             ]
         },
         Message={
