@@ -44,7 +44,7 @@ def decode_body_to_dict(encoded_body):
     decoded_body = encoded_body_bytes.decode("utf8")
 
     string_dict = {
-        key: unquote(value)
+        key: unquote(value.replace("+", " "))
         for key, value in [
             map(str.strip, item.split("=", 1))
             for item in decoded_body.split("&")
