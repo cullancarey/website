@@ -100,29 +100,27 @@
 			<section id="two" aria-label="Contact Section">
 				<div class="container">
 					<h2>Let's Talk!</h2>
-					<div class="form">
-						<form id="contact-form" action="https://form.cullancarey.com/" method="post">
-							<div class="field half first">
-								<label for="name">Name</label>
-								<input type="text" name="name" id="name" required />
+					<form action="https://form.develop.cullancarey.com/" method="post">
+						<div class="g-recaptcha" data-sitekey="6LcD61giAAAAAGHXBczDgl9WlAu921noVQEGUXLR"
+							data-callback="correctCaptcha"></div>
+						<div class="fields">
+							<div class="field half">
+								<input type="text" name="CustomerName" id="name" required placeholder="Name" />
+								<input type="checkbox" name="contact_me_by_fax_only" value="1"
+									style="display:none !important" tabindex="-1" autocomplete="off">
 							</div>
 							<div class="field half">
-								<label for="email">Email</label>
-								<input type="email" name="email" id="email" required />
+								<input type="email" name="CustomerEmail" id="email" required placeholder="Email" />
 							</div>
 							<div class="field">
-								<label for="message">Message</label>
-								<textarea name="message" id="message" rows="4" required></textarea>
+								<textarea name="MessageDetails" id="message" required
+									placeholder="Send Cullan a message!" rows="7"></textarea>
 							</div>
-							<div class="field">
-								<div class="g-recaptcha" data-sitekey="6LcD61giAAAAAGHXBczDgl9WlAu921noVQEGUXLR"></div>
-							</div>
-							<ul class="actions">
-								<li><input type="submit" value="Send Message" class="special" /></li>
-								<li><input type="reset" value="Reset" /></li>
-							</ul>
-						</form>
-					</div>
+						</div>
+						<ul class="actions">
+							<li><input type="submit" value="Submit" class="button primary"></li>
+						</ul>
+					</form>
 				</div>
 			</section>
 		</div>
