@@ -1,28 +1,32 @@
 <!DOCTYPE HTML>
-<!--
-	Read Only by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
+<html lang="en">
 
 <head>
-	<title>Cullan Carey</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<title>Cullan Carey</title>
 	<link rel="stylesheet" href="assets/css/main.css" />
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body class="is-preload">
+
 	<!-- Header -->
-	<section id="header">
+	<section id="header" aria-label="Header Section">
 		<header>
-			<span class="image avatar"><img src="images/avatar.jpg" alt="" /></span>
+			<span class="image avatar"><img src="images/avatar.jpg" alt="Cullan Carey Avatar" /></span>
 			<h1 id="logo"><a href="#">Cullan Carey</a></h1>
-			<p>I am a cloud engineer with a<br />
-				passion to learn.</p>
+			<p>I am a cloud engineer with a<br /> passion to learn.</p>
 		</header>
-		<nav id="nav">
+		<nav id="nav" aria-label="Main Navigation">
 			<ul>
 				<li><a href="#one" class="active">About Me</a></li>
 				<li><a href="#two">Contact</a></li>
@@ -31,25 +35,28 @@
 		</nav>
 		<footer>
 			<ul class="icons">
-				<li><a href="https://www.linkedin.com/in/cullancarey/" target="_blank"
-						class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-				<li><a href="https://github.com/cullancarey" target="_blank" class="icon brands fa-github"><span
-							class="label">Github</span></a></li>
-				<li><a href="mailto: cullancareyconsulting@gmail.com" target="_blank"
-						class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-				<li><a href="resume/Cullan_Carey_Resume.pdf" target="_blank" class="icon solid fa-file"><span
-							class="label">Resume</span></a></li>
+				<li><a href="https://www.linkedin.com/in/cullancarey/" target="_blank" class="icon brands fa-linkedin"
+						aria-label="LinkedIn"><span class="label">LinkedIn</span></a></li>
+				<li><a href="https://github.com/cullancarey" target="_blank" class="icon brands fa-github"
+						aria-label="Github"><span class="label">Github</span></a></li>
+				<li><a href="mailto: cullancareyconsulting@gmail.com" target="_blank" class="icon solid fa-envelope"
+						aria-label="Email"><span class="label">Email</span></a></li>
+				<li><a href="resume/Cullan_Carey_Resume.pdf" target="_blank" class="icon solid fa-file"
+						aria-label="Resume"><span class="label">Resume</span></a></li>
 			</ul>
 		</footer>
 	</section>
+
 	<!-- Wrapper -->
 	<div id="wrapper">
-		<!-- Main -->
+
+		<!-- Main Content -->
 		<div id="main">
-			<!-- One -->
-			<section id="one">
+
+			<!-- About Me Section -->
+			<section id="one" aria-label="About Me Section">
 				<div class="image main" data-position="center">
-					<img src="images/banner.jpg" alt="" />
+					<img src="images/banner.jpg" alt="Cullan Carey Banner" />
 				</div>
 				<div class="container">
 					<header class="major">
@@ -60,11 +67,9 @@
 						technologies. I founded Cullan Carey Consulting, LLC, to pursue my career as an independent
 						consultant in the cloud space. As my company's owner and sole employee, I bring knowledge and
 						expertise to every project I undertake.</p>
-
 					<p>Throughout my career, I have built, analyzed, automated, and supported AWS cloud environments
 						with a proven track record of success. I am always expanding my knowledge through work and
 						personal projects, ensuring I stay ahead of the curve in this rapidly evolving industry.</p>
-
 					<p>In previous consulting roles, I have developed expertise in a wide range of areas related to
 						cloud engineering. For example, I have created CI/CD deployment pipelines using GitHub Actions
 						for CDK applications, streamlining the deployment process and ensuring fast and reliable
@@ -74,32 +79,27 @@
 						infrastructure-as-code (IaC) modules using Terraform to simplify the provisioning and managing
 						of AWS resources. Furthermore, I have integrated DNS configurations across various website
 						hosting platforms and Route53, ensuring a seamless user experience.</p>
-
 					<p>In terms of security, I have developed automated monitoring systems using SecurityHub, GuardDuty,
 						and Inspector, ensuring that all aspects of the infrastructure are secure and compliant with
 						relevant regulations. Moreover, I have performed cost analyses on AWS environments and
 						recommended optimizing costs, maximizing efficiency, and minimizing expenses.</p>
-
 					<p>As an independent consultant, I bring a unique perspective to every project. I work closely with
 						my clients to understand their needs and provide customized solutions that meet and exceed their
 						expectations. With my dedication, expertise, and experience, I am confident I can help any
-						organization achieve its cloud computing goals. I'd love to discuss how I can help your organizaiton.
+						organization achieve its cloud computing goals. I'd love to discuss how I can help your
+						organizaiton.
 						Please schedule time to talk with me below.</p>
 				</div>
-				<!-- Calendly inline widget begin -->
+
+				<!-- Calendly inline widget -->
 				<div class="calendly-inline-widget" data-url="https://calendly.com/cullancareyconsulting/meetwithcullan"
 					style="min-width:320px;height:700px;"></div>
-				<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"
-					async></script>
-				<!-- Calendly inline widget end -->
 			</section>
 
-			<!-- Three -->
-			<section id="two">
+			<!-- Contact Section -->
+			<section id="two" aria-label="Contact Section">
 				<div class="container">
 					<h2>Let's Talk!</h2>
-					<p>Enter your name, email, and a message below to get in contact with me.</p>
-					<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 					<form action="https://form.develop.cullancarey.com/" method="post">
 						<div class="g-recaptcha" data-sitekey="6LcD61giAAAAAGHXBczDgl9WlAu921noVQEGUXLR"
 							data-callback="correctCaptcha"></div>
@@ -124,15 +124,11 @@
 				</div>
 			</section>
 		</div>
-		<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/jquery.scrollex.min.js"></script>
-		<script src="assets/js/jquery.scrolly.min.js"></script>
-		<script src="assets/js/browser.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
+
+		<!-- Scripts at the bottom for improved performance -->
 		<script src="assets/js/main.js"></script>
 		<script src="assets/js/captcha.js"></script>
+		<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 
 </html>

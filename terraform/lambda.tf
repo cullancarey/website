@@ -66,6 +66,7 @@ resource "aws_iam_policy" "contact_form_lambda_iam_policy" {
             "Resource": [
                 "arn:aws:ses:us-east-2:${local.account_id}:identity/${var.root_domain_name}",
                 "arn:aws:ses:us-east-2:${local.account_id}:identity/cullancarey@yahoo.com",
+                "arn:aws:ses:us-east-2:${local.account_id}:identity/cullancareyconsulting@gmail.com",
                 "arn:aws:logs:us-east-2:${local.account_id}:*"
             ]
         },
