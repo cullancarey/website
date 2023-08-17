@@ -1,68 +1,70 @@
-"""is a lightweight data interchange format inspired by JavaScript object literal syntax."""
+"""Lambda to send intake form emails"""
+import logging
 import json
 import os
 import base64
 import boto3
 import urllib3
 
+# Set up logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 
 def lambda_handler(event, context):
     """Main lambda function for execution"""
-    print(json.dumps(event))
+    logger.info(f"Event received: {json.dumps(event)}")
 
-    encoded_body = event["body"]
+    string_dict = decode_body_to_dict(event["body"])
+    logger.info(f"Decoded body to dictionary: {string_dict}")
 
-    base64_bytes = encoded_body.encode("utf8")
-
-    encoded_body_bytes = base64.b64decode(base64_bytes)
-    decoded_body = encoded_body_bytes.decode("utf8")
-
-    print(f"decoded body: {decoded_body}")
-
-    string_dict = []
-    for each in decoded_body.split("&"):
-        each_item = each.replace("+", " ").replace("%40", "@")
-        if "=" in each:
-            string_dict.append(map(str.strip, each_item.split("=", 1)))
-    string_dict = dict(string_dict)
-    print(string_dict)
-
-    # Catch dumb bots
+    # Catch bots
     if string_dict.get("contact_me_by_fax_only", False):
-        print("Honeypot field filled out, bot detected.")
-        response_body = """\
-<html>
-<head></head>
-  <body>
-    <p>Ha!<br>
-       Found ya!.<br>
-       Get lost, bot.
-    </p>
-  </body>
-</html>
-"""
-        return {
-            "statusCode": 200,
-            "body": response_body,
-            "headers": {
-                "Content-Type": "text/html",
-            },
-        }
+        logger.info("Honeypot field filled out, bot detected.")
+        return html_response("Ha!<br> Found ya!<br> Get lost, bot.")
 
     source_ip = event["requestContext"]["http"]["sourceIp"]
     captcha = string_dict["g-recaptcha-response"]
-
     response_body, captcha_success = verify_captcha(captcha, source_ip)
 
-    customer_email = string_dict["CustomerEmail"]
-    customer_message = string_dict["MessageDetails"]
+    customer_email = string_dict.get("CustomerEmail", "")
+    customer_message = string_dict.get("MessageDetails", "")
     if captcha_success:
-        print("Captcha successful, sending email...")
+        logger.info("Captcha successful, sending email...")
         send_email(customer_email, customer_message)
 
+    return html_response(response_body)
+
+
+def decode_body_to_dict(encoded_body):
+    """function to decode message"""
+    base64_bytes = encoded_body.encode("utf8")
+    encoded_body_bytes = base64.b64decode(base64_bytes)
+    decoded_body = encoded_body_bytes.decode("utf8")
+
+    string_dict = {
+        key: value.replace("+", " ").replace("%40", "@")
+        for key, value in [
+            map(str.strip, item.split("=", 1))
+            for item in decoded_body.split("&")
+            if "=" in item
+        ]
+    }
+    return string_dict
+
+
+def html_response(body_content):
+    """function to create html response"""
     return {
         "statusCode": 200,
-        "body": response_body,
+        "body": f"""\
+<html>
+<head></head>
+  <body>
+    <p>{body_content}</p>
+  </body>
+</html>
+""",
         "headers": {
             "Content-Type": "text/html",
         },
@@ -121,32 +123,16 @@ def verify_captcha(captcha_response, source_ip):
         },
     )
     request_values = json.loads(request_response.data.decode("utf-8"))
-    if request_values["success"] is False:
-        print(f"Captcha failed do to error: {request_values['error-codes']}")
-        response_body = """\
-<html>
-  <head></head>
-  <body>
-    <p>Oops!<br>
-       You did not pass captcha.<br>
-       Get lost, bot!
-    </p>
-  </body>
-</html>
-"""
+    if not request_values.get("success"):
+        logger.error(
+            f"Captcha failed due to error: {request_values.get('error-codes')}"
+        )
+        response_body = "Oops!<br> You did not pass captcha.<br> Get lost, bot!"
         captcha_success = False
         return response_body, captcha_success
-    response_body = f"""\
-<html>
-<head></head>
-<body>
-<p>Thank you!<br>
-   Cullan will get back to you shortly.<br>
-   In the meantime, lets go <a href="https://{os.environ['website']}">back</a> to the website.
-</p>
-</body>
-</html>
-"""
+    response_body = f"""Thank you!<br>
+                       Cullan will get back to you shortly.<br>
+                       In the meantime, let's go <a href="https://{os.environ['website']}">back</a> to the website."""
     captcha_success = True
     return response_body, captcha_success
 
@@ -154,7 +140,7 @@ def verify_captcha(captcha_response, source_ip):
 def get_param():
     """Function to get parameter value from parameter store for captcha verification"""
     client = boto3.client("ssm")
-    print("Getting captcha paramter...")
+    logger.info("Getting captcha parameter...")
     response = client.get_parameter(
         Name=f"{os.environ['environment']}_google_captcha_secret", WithDecryption=True
     )
