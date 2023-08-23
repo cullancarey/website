@@ -160,10 +160,12 @@
 							body: JSON.stringify(payload)
 						});
 
+						const data = await response.json();
+
 						if (response.status === 200) {
-							alert("Thank you for your message!");
+							alert("Thank you for your message! " + (data.message || ''));
 						} else {
-							alert("An error occurred. Please try again.");
+							alert("An error occurred. " + (data.error || 'Please try again.'));
 						}
 					} catch (error) {
 						console.error("There was a problem with the fetch operation:", error);
