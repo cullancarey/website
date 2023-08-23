@@ -164,6 +164,8 @@
 
 						if (data.statusCode === 200) {
 							alert((data.message || 'Thank you for your message!'));
+						} else if (response.status !== 200) {
+							alert("Something went wrong. Please contact cullancarey@gmail.com.");
 						} else {
 							alert((data.error || 'Something went wrong. Please contact cullancarey@gmail.com.'));
 						}
