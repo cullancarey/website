@@ -100,13 +100,13 @@
 			<section id="two" aria-label="Contact Section">
 				<div class="container">
 					<h2>Let's Talk!</h2>
-					<form action="https://form.develop.cullancarey.com/" method="post">
+					<form id="contact-form">
 						<div class="g-recaptcha" data-sitekey="6LcD61giAAAAAGHXBczDgl9WlAu921noVQEGUXLR"
 							data-callback="correctCaptcha"></div>
 						<div class="fields">
 							<div class="field half">
 								<input type="text" name="CustomerName" id="name" required placeholder="Name" />
-								<input type="checkbox" name="contact_me_by_fax_only" value="1"
+								<input type="checkbox" name="contact_me_by_fax_only" id="bot_check" value="1"
 									style="display:none !important" tabindex="-1" autocomplete="off">
 							</div>
 							<div class="field half">
@@ -118,11 +118,61 @@
 							</div>
 						</div>
 						<ul class="actions">
-							<li><input type="submit" value="Submit" class="button primary"></li>
+							<li><button type="button" onclick="submitForm()" class="button primary">Submit</button></li>
 						</ul>
 					</form>
 				</div>
 			</section>
+
+			<script>
+				async function submitForm() {
+					const name = document.getElementById("name").value;
+					const email = document.getElementById("email").value;
+					const message = document.getElementById("message").value;
+					const bot_check = document.getElementById("bot_check")
+					const recaptchaResponse = document.querySelector('textarea[name="g-recaptcha-response"]').value;
+
+					// Perform validation if necessary
+					if (!name || !email || !message) {
+						alert("Please fill out all the required fields.");
+						return;
+					}
+
+					const payload = {
+						CustomerName: name,
+						CustomerEmail: email,
+						MessageDetails: message,
+						"g-recaptcha-response": recaptchaResponse
+						// Add captcha details if needed
+					};
+
+					// Only include BotCheck if checkbox is checked
+					if (bot_check.checked) {
+						payload.BotCheck = bot_check.value;
+					}
+
+					try {
+						const response = await fetch('https://form.develop.cullancarey.com/', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(payload)
+						});
+
+						const data = await response.json();
+
+						if (data.statusCode === 200) {
+							alert((data.message || 'Thank you for your message!'));
+						} else {
+							alert((data.error || 'Something went wrong. Please contact cullancarey@gmail.com.'));
+						}
+					} catch (error) {
+						console.error("There was a problem with the fetch operation:", error);
+					}
+				}
+			</script>
+
 		</div>
 
 		<!-- Scripts at the bottom for improved performance -->
