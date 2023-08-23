@@ -149,7 +149,7 @@ def verify_captcha(captcha_response, source_ip):
     server_response = json.dumps(
         {
             "statusCode": 200,
-            "message": "Cullan will get back to you shortly!",
+            "message": "Thank you for your message! Cullan will get back to you shortly!",
         }
     )
     return captcha_success, server_response
