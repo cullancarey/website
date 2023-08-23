@@ -130,6 +130,7 @@
 					const email = document.getElementById("email").value;
 					const message = document.getElementById("message").value;
 					const bot_check = document.getElementById("bot_check")
+					const recaptchaResponse = document.querySelector('textarea[name="g-recaptcha-response"]').value;
 
 					// Perform validation if necessary
 					if (!name || !email || !message) {
@@ -140,7 +141,8 @@
 					const payload = {
 						CustomerName: name,
 						CustomerEmail: email,
-						MessageDetails: message
+						MessageDetails: message,
+						"g-recaptcha-response": recaptchaResponse
 						// Add captcha details if needed
 					};
 
