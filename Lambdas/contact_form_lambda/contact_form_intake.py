@@ -16,16 +16,20 @@ logger.setLevel(logging.INFO)
 def lambda_handler(event, context):
     """Main lambda function for execution"""
     logger.info(f"Event received: {json.dumps(event)}")
-    try:
-        string_dict = decode_body_to_dict(event["body"])
-    except KeyError as error:
-        logger.error(f"Error find key 'body': {error}")
-        sys.exit()
+    if event["isBase64Encoded"]:
+        try:
+            string_dict = decode_body_to_dict(event["body"])
+        except KeyError as error:
+            logger.error(f"Error find key 'body': {error}")
+            sys.exit()
+        else:
+            logger.info(f"Decoded body to dictionary: {string_dict}")
     else:
-        logger.info(f"Decoded body to dictionary: {string_dict}")
+        string_dict = json.loads(event["body"])
+        logger.info(string_dict)
 
     # Catch bots
-    if string_dict.get("contact_me_by_fax_only", False):
+    if string_dict.get("BotCheck", False):
         logger.info("Honeypot field filled out, bot detected.")
         return html_response("Ha!<br> Found ya!<br> Get lost, bot.")
 

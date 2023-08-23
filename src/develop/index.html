@@ -106,7 +106,7 @@
 						<div class="fields">
 							<div class="field half">
 								<input type="text" name="CustomerName" id="name" required placeholder="Name" />
-								<input type="checkbox" name="contact_me_by_fax_only" value="1"
+								<input type="checkbox" name="contact_me_by_fax_only" id="bot_check" value="1"
 									style="display:none !important" tabindex="-1" autocomplete="off">
 							</div>
 							<div class="field half">
@@ -129,6 +129,7 @@
 					const name = document.getElementById("name").value;
 					const email = document.getElementById("email").value;
 					const message = document.getElementById("message").value;
+					const bot_check = document.getElementById("bot_check").value
 
 					// Perform validation if necessary
 					if (!name || !email || !message) {
@@ -139,7 +140,8 @@
 					const payload = {
 						CustomerName: name,
 						CustomerEmail: email,
-						MessageDetails: message
+						MessageDetails: message,
+						BotCheck: bot_check
 						// Add captcha details if needed
 					};
 
@@ -148,7 +150,6 @@
 							method: 'POST',
 							headers: {
 								'Content-Type': 'application/json',
-								'Content-Length': 0
 							},
 							body: JSON.stringify(payload)
 						});
