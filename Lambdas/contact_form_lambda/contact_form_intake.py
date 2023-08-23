@@ -31,11 +31,11 @@ def lambda_handler(event, context):
     # Catch bots
     if string_dict.get("BotCheck", False):
         logger.info("Honeypot field filled out, bot detected.")
-        return html_response("Ha!<br> Found ya!<br> Get lost, bot.")
+        return html_response("Ha! Found ya! Get lost, bot.")
 
     source_ip = event["requestContext"]["http"]["sourceIp"]
     captcha = string_dict["g-recaptcha-response"]
-    response_body, captcha_success = verify_captcha(captcha, source_ip)
+    captcha_success, server_response = verify_captcha(captcha, source_ip)
 
     customer_email = string_dict.get("CustomerEmail", "")
     customer_message = string_dict.get("MessageDetails", "")
@@ -43,7 +43,7 @@ def lambda_handler(event, context):
         logger.info("Captcha successful, sending email...")
         send_email(customer_email, customer_message)
 
-    return html_response(response_body)
+    return server_response
 
 
 def decode_body_to_dict(encoded_body):
@@ -137,14 +137,18 @@ def verify_captcha(captcha_response, source_ip):
         logger.error(
             f"Captcha failed due to error: {request_values.get('error-codes')}"
         )
-        response_body = "Oops!<br> You did not pass captcha.<br> Get lost, bot!"
         captcha_success = False
-        return response_body, captcha_success
-    response_body = f"""Thank you!<br>
-                       Cullan will get back to you shortly.<br>
-                       In the meantime, let's go <a href="https://{os.environ['website']}">back</a> to the website."""
+        server_response = {
+            "statusCode": 911,
+            "error": "Something went wrong. Please contact cullancarey@gmail.com.",
+        }
+        return captcha_success, server_response
     captcha_success = True
-    return response_body, captcha_success
+    server_response = {
+        "statusCode": 200,
+        "message": "Cullan will get back to you shortly!",
+    }
+    return captcha_success, server_response
 
 
 def get_param():
