@@ -140,7 +140,7 @@ def verify_captcha(captcha_response, source_ip):
         captcha_success = False
         server_response = json.dumps(
             {
-                "statusCode": 911,
+                "statusCode": 403,
                 "error": "Something went wrong. Please contact cullancarey@gmail.com.",
             }
         )
