@@ -165,7 +165,7 @@
 						if (data.statusCode === 200) {
 							alert((data.message || 'Thank you for your message!'));
 						} else {
-							alert("An error occurred. " + (data.error || 'Please try again.'));
+							alert((data.error || 'Something went wrong. Please contact cullancarey@gmail.com.'));
 						}
 					} catch (error) {
 						console.error("There was a problem with the fetch operation:", error);
