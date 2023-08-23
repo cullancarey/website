@@ -3,6 +3,7 @@ import logging
 import json
 import os
 import base64
+import sys
 from urllib.parse import unquote
 import boto3
 import urllib3
@@ -15,9 +16,13 @@ logger.setLevel(logging.INFO)
 def lambda_handler(event, context):
     """Main lambda function for execution"""
     logger.info(f"Event received: {json.dumps(event)}")
-
-    string_dict = decode_body_to_dict(event["body"])
-    logger.info(f"Decoded body to dictionary: {string_dict}")
+    try:
+        string_dict = decode_body_to_dict(event["body"])
+    except KeyError as error:
+        logger.error(f"Error find key 'body': {error}")
+        sys.exit()
+    else:
+        logger.info(f"Decoded body to dictionary: {string_dict}")
 
     # Catch bots
     if string_dict.get("contact_me_by_fax_only", False):
