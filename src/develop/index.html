@@ -163,7 +163,7 @@
 						const data = await response.json();
 
 						if (response.status === 200) {
-							alert("Thank you for your message! " + (data.message || ''));
+							alert((data.message || 'Thank you for your message!'));
 						} else {
 							alert("An error occurred. " + (data.error || 'Please try again.'));
 						}

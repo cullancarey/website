@@ -138,16 +138,20 @@ def verify_captcha(captcha_response, source_ip):
             f"Captcha failed due to error: {request_values.get('error-codes')}"
         )
         captcha_success = False
-        server_response = {
-            "statusCode": 911,
-            "error": "Something went wrong. Please contact cullancarey@gmail.com.",
-        }
+        server_response = json.dumps(
+            {
+                "statusCode": 911,
+                "error": "Something went wrong. Please contact cullancarey@gmail.com.",
+            }
+        )
         return captcha_success, server_response
     captcha_success = True
-    server_response = {
-        "statusCode": 200,
-        "message": "Cullan will get back to you shortly!",
-    }
+    server_response = json.dumps(
+        {
+            "statusCode": 200,
+            "message": "Cullan will get back to you shortly!",
+        }
+    )
     return captcha_success, server_response
 
 
