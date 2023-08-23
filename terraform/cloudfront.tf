@@ -112,7 +112,7 @@ data "aws_cloudfront_response_headers_policy" "response_cache_policy" {
 
 resource "aws_cloudfront_distribution" "contact_form_intake_distribution" {
   origin {
-    domain_name = aws_apigatewayv2_domain_name.intake_api_domain.id
+    domain_name = aws_apigatewayv2_api.form_intake_api.api_endpoint
     origin_id   = var.intake_api_domain
   }
 
