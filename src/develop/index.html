@@ -100,7 +100,7 @@
 			<section id="two" aria-label="Contact Section">
 				<div class="container">
 					<h2>Let's Talk!</h2>
-					<form action="https://form.develop.cullancarey.com/" method="post">
+					<form id="contact-form">
 						<div class="g-recaptcha" data-sitekey="6LcD61giAAAAAGHXBczDgl9WlAu921noVQEGUXLR"
 							data-callback="correctCaptcha"></div>
 						<div class="fields">
@@ -118,11 +118,51 @@
 							</div>
 						</div>
 						<ul class="actions">
-							<li><input type="submit" value="Submit" class="button primary"></li>
+							<li><button type="button" onclick="submitForm()" class="button primary">Submit</button></li>
 						</ul>
 					</form>
 				</div>
 			</section>
+
+			<script>
+				async function submitForm() {
+					const name = document.getElementById("name").value;
+					const email = document.getElementById("email").value;
+					const message = document.getElementById("message").value;
+
+					// Perform validation if necessary
+					if (!name || !email || !message) {
+						alert("Please fill out all the required fields.");
+						return;
+					}
+
+					const payload = {
+						CustomerName: name,
+						CustomerEmail: email,
+						MessageDetails: message
+						// Add captcha details if needed
+					};
+
+					try {
+						const response = await fetch('https://form.develop.cullancarey.com/', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify(payload)
+						});
+
+						if (response.status === 200) {
+							alert("Thank you for your message!");
+						} else {
+							alert("An error occurred. Please try again.");
+						}
+					} catch (error) {
+						console.error("There was a problem with the fetch operation:", error);
+					}
+				}
+			</script>
+
 		</div>
 
 		<!-- Scripts at the bottom for improved performance -->
