@@ -85,8 +85,11 @@ jobs:
     - name: Deploy static site to S3 bucket Dev
       run: aws s3 sync ./src/$GITHUB_REF_NAME/ s3://develop.cullancarey.com --delete --size-only
 
-    - name: Invalidate Cloudfront Cache Dev
+    - name: Invalidate Website Cloudfront Cache Dev
       run: aws cloudfront create-invalidation --distribution-id E15AY619D905H7 --paths '/*'
+
+    - name: Invalidate Contact Form Cloudfront Cache Dev
+      run: aws cloudfront create-invalidation --distribution-id E1GHUL054SAKNC --paths '/*'
 
 
   prod-terraform:
@@ -163,5 +166,8 @@ jobs:
     - name: Deploy static site to S3 bucket Prod
       run: aws s3 sync ./src/$GITHUB_REF_NAME/ s3://cullancarey.com --delete --size-only
 
-    - name: Invalidate Cloudfront Cache Prod
+    - name: Invalidate Website Cloudfront Cache Prod
       run: aws cloudfront create-invalidation --distribution-id E1EM2WQ96D3J54 --paths '/*'
+
+    - name: Invalidate Contact Form Cloudfront Cache Prod
+      run: aws cloudfront create-invalidation --distribution-id E46EQMY3XNCHF --paths '/*'
