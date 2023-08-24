@@ -168,7 +168,7 @@ resource "aws_cloudfront_response_headers_policy" "contact_form_intake_response_
     }
 
     access_control_allow_origins {
-      items = ["${var.root_domain_name}"]
+      items = ["https://${var.root_domain_name}"]
     }
 
     access_control_max_age_sec = 0
