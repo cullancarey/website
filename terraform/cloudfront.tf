@@ -111,6 +111,7 @@ resource "aws_cloudfront_distribution" "contact_form_intake_distribution" {
     domain_name = replace(aws_apigatewayv2_api.form_intake_api.api_endpoint, "https://", "")
     origin_id   = var.intake_api_domain
     custom_origin_config {
+      http_port              = "80"
       https_port             = "443"
       origin_protocol_policy = "https-only"
       origin_ssl_protocols   = ["TLSv1.2"]
