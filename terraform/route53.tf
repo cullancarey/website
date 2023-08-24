@@ -52,8 +52,8 @@ resource "aws_route53_record" "intake_api_domain_record" {
   name    = var.intake_api_domain
   type    = "A"
   alias {
-    name                   = aws_apigatewayv2_domain_name.intake_api_domain.domain_name_configuration[0].target_domain_name
-    zone_id                = aws_apigatewayv2_domain_name.intake_api_domain.domain_name_configuration[0].hosted_zone_id
+    name                   = aws_cloudfront_distribution.contact_form_intake_distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.contact_form_intake_distribution.hosted_zone_id
     evaluate_target_health = false
   }
 }

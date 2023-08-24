@@ -126,6 +126,14 @@
 
 			<script>
 				async function submitForm() {
+					const submitButton = document.querySelector('.button.primary');
+
+					// Disable the submit button and show loading text
+					submitButton.disabled = true;
+					submitButton.textContent = "Sending...";
+
+
+
 					const name = document.getElementById("name").value;
 					const email = document.getElementById("email").value;
 					const message = document.getElementById("message").value;
@@ -135,6 +143,9 @@
 					// Perform validation if necessary
 					if (!name || !email || !message) {
 						alert("Please fill out all the required fields.");
+						// Re-enable the submit button
+						submitButton.disabled = false;
+						submitButton.textContent = "Submit";
 						return;
 					}
 
@@ -171,6 +182,10 @@
 						}
 					} catch (error) {
 						console.error("There was a problem with the fetch operation:", error);
+					} finally {
+						// Re-enable the submit button
+						submitButton.disabled = false;
+						submitButton.textContent = "Submit";
 					}
 				}
 			</script>

@@ -16,15 +16,15 @@ resource "aws_apigatewayv2_api" "form_intake_api" {
 
 
 
-resource "aws_apigatewayv2_domain_name" "intake_api_domain" {
-  domain_name = var.intake_api_domain
+# resource "aws_apigatewayv2_domain_name" "intake_api_domain" {
+#   domain_name = var.intake_api_domain
 
-  domain_name_configuration {
-    certificate_arn = aws_acm_certificate.intake_api_certificate.arn
-    endpoint_type   = "REGIONAL"
-    security_policy = "TLS_1_2"
-  }
-}
+#   domain_name_configuration {
+#     certificate_arn = aws_acm_certificate.intake_api_certificate.arn
+#     endpoint_type   = "REGIONAL"
+#     security_policy = "TLS_1_2"
+#   }
+# }
 
 
 resource "aws_apigatewayv2_stage" "intake_api_stage" {
@@ -35,11 +35,11 @@ resource "aws_apigatewayv2_stage" "intake_api_stage" {
 }
 
 
-resource "aws_apigatewayv2_api_mapping" "intake_api_mapping" {
-  api_id      = aws_apigatewayv2_api.form_intake_api.id
-  domain_name = aws_apigatewayv2_domain_name.intake_api_domain.id
-  stage       = aws_apigatewayv2_stage.intake_api_stage.id
-}
+# resource "aws_apigatewayv2_api_mapping" "intake_api_mapping" {
+#   api_id      = aws_apigatewayv2_api.form_intake_api.id
+#   domain_name = aws_apigatewayv2_domain_name.intake_api_domain.id
+#   stage       = aws_apigatewayv2_stage.intake_api_stage.id
+# }
 
 
 resource "aws_apigatewayv2_integration" "intake_api_integration" {
