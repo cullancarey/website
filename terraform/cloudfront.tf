@@ -164,7 +164,7 @@ resource "aws_cloudfront_response_headers_policy" "contact_form_intake_response_
     }
 
     access_control_allow_methods {
-      items = ["*"]
+      items = ["POST", "OPTIONS"]
     }
 
     access_control_allow_origins {
